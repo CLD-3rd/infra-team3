@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Log</title>
+
+    <link rel="stylesheet" th:href="@{/css/TLstyle.css}">
+    <script th:src="@{/js/TLscript.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div class="photo-section">
+        <img th:src="${mainPhoto.picUrl}" th:alt="${mainPhoto.title}" alt="Main Photo">
+    </div>
+
+    <div class="info-section">
+        <h2 th:text="${mainPhoto.title}">TITLE</h2>
+        <div class="meta">📅 <span th:text="${#temporals.format(mainPhoto.createdAt, 'MMMM dd, yyyy')}">May 19,
+                    2025</span></div>
+        <!-- Like toggle -->
+        <div class="likes">
+            <span th:text="'❤️ ' + ${mainPhoto.likeCount} + ' Likes'">❤️ 1 Likes</span>
+            <a th:href="@{/gallery/{id}/likes(id=${mainPhoto.logId})}">
+                <button type="button" th:text="${mainPhoto.isLiked} ? '💔 Unlike' : '❤️ Like'">❤️</button>
+            </a>
+        </div>
+
+        <!-- Wishlist popover -->
+        <div class="wishlist-popover-container" style="position: relative; margin-top:10px;">
+            <button id="wishlistToggleBtn" type="button" th:text="${mainPhoto.isWished} ? 'Wish' : 'Wished'"> Wish
+            </button>
+            <div id="wishlistPopover" class="wishlist-popover-content"
+                 style="display:none; position:absolute; top:100%; left:0; background:white; border:1px solid #cccccc; border-radius:5px; box-shadow:0 2px 8px rgba(0,0,0,0.2); padding:15px; z-index:100;">
+                <h4>Wishlist 등록</h4>
+                <form th:action="@{/users/{userId}/wishlists(userId=${currentUserId})}" method="post">
+                    <input type="hidden" name="country_id" th:value="${mainPhoto.countryId}"/>
+                    <label>
+                        여행 시작:
+                        <input type="date" name="travel_date"/>
+                    </label><br/>
+                    <label>
+                        여행 종료:
+                        <input type="date" name="end_date"/>
+                    </label><br/>
+                    <button type="submit">등록</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="country-info">
+            📍 관련 국가: <span th:text="${mainPhoto.countryName}">South Korea</span>
+        </div>
+
+        <!-- comment dto -->
+        <div class="comment-box" th:data-log-id="${mainPhoto.logId}">
+            <div class="comment" th:each="comment : ${comments}">
+                <p data-comment-id="${comment.commentId}">
+                    <strong th:text="${comment.userNickname}">작성자</strong>:
+                    <span class="comment-content" th:text="${comment.content}"></span>
+                    <button class="edit-btn" th:if="${comment.userId == currentUserId}">수정</button>
+                    <button class="delete-btn" th:if="${comment.userId == currentUserId}">삭제</button>
+                    <span class="edit-form" style="display:none;">
+                        <input type="text" class="edit-input" th:value="${comment.content}" />
+                        <button class="save-btn">Save</button>
+                        <button class="cancel-btn">Cancel</button>
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="comment-section">
+            <form th:action="@{/gallery/{id}/comments(id=${mainPhoto.logId})}" method="post">
+                <textarea name="content" placeholder="댓글을 입력하세요..."></textarea>
+                <button type="submit">댓글 등록</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!-- relatedPhotos dto -->
+<div class="related-section">
+    <div class="related-title">연관된 사진</div>
+    <div class="related-photos">
+        <div th:each="relatedPhoto : ${relatedPhotos}">
+            <a th:href="@{/gallery/{id}(id=${relatedPhoto.logId})}">
+                <img th:src="${relatedPhoto.picUrl}" alt="Related Photo">
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
