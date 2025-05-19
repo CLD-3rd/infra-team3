@@ -1,0 +1,44 @@
+.sort-options {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  color: #333;
+}
+
+.sort-item {
+  cursor: pointer;
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.sort-item:hover {
+  color: #c73430; /* hover 시 강조 색상 */
+}
+
+/* 선택된 항목 스타일 (나중에 JS로 class="selected" 붙여주면 됨) */
+.sort-item.selected {
+  font-weight: bold;
+  color: #c73430;
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.post-header .text1 {
+  font-size: 18px;
+  color: #f3aa29;
+  text-transform: uppercase;
+}
+
+.post-stats {
+  font-size: 14px;
+  color: #555;
+  white-space: nowrap;
+}
