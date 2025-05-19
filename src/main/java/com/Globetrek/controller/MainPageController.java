@@ -43,6 +43,6 @@ public class MainPageController {
         Country country = countryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid country ID: " + id));
         model.addAttribute("country", country);
-        return "map"; // gallery.html
+        return "gallery"; // gallery.html
     }
 }
