@@ -218,3 +218,11 @@ target/
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java,eclipse
 >>>>>>> 58e34445fac3e4141b128750cda311de11ed1e77
+target/
+.classpath
+.project
+.classpath
+.project
+target/
+.classpath
+.project
