@@ -29,6 +29,6 @@ public class Country {
     private List<TravelLog> travelLogs;
     
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
-    private List<WishList> wishlists;;
+    private List<WishList> wishlists;
 
 }
