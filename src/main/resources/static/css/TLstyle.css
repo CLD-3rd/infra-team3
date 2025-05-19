@@ -1,0 +1,123 @@
+html, body {
+    font-family: "Raleway", Arial, sans-serif;
+    line-height: 1.6;
+    font-size: 16px;
+    position: relative;
+    color: #848484;
+    font-weight: 300;
+    overflow-x: hidden;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    padding: 30px;
+}
+
+.photo-section {
+    flex: 3;
+}
+
+.photo-section img {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 8px;
+}
+
+.info-section {
+    flex: 2;
+    margin-left: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-section h2 {
+    margin-top: 0;
+}
+
+.info-section .meta {
+    color: gray;
+    font-size: 14px;
+}
+
+.comment-box {
+    margin: 15px 0;
+    padding: 10px;
+    border: 1px solid #d0d0d0;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+.info-section .likes {
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.comment-section {
+    margin-top: 20px;
+}
+
+.comment-section textarea {
+    width: 100%;
+    height: 80px;
+    resize: none;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.comment-section button {
+    padding: 10px 15px;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.country-info {
+    margin-top: 25px;
+    padding: 15px;
+    background: #e9ebef;
+    border-left: 5px solid #2c7be5;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.related-section {
+    margin-top: 50px;
+    padding: 0 30px;
+}
+
+.related-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.related-photos {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+}
+
+.related-photos img {
+    height: 120px;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+
+.related-photos::-webkit-scrollbar {
+    height: 6px;
+}
+
+.related-photos::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border-radius: 3px;
+}
