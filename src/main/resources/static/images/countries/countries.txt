@@ -1,0 +1,223 @@
+Afghanistan
+Angola
+Albania
+United Arab Emirates
+Argentina
+Armenia
+Australia
+Austria
+Azerbaijan
+Burundi
+Belgium
+Benin
+Burkina Faso
+Bangladesh
+Bulgaria
+Bosnia and Herzegovina
+Belarus
+Belize
+Bolivia
+Brazil
+Brunei Darussalam
+Bhutan
+Botswana
+Central African Republic
+Canada
+Switzerland
+China
+Côte d'Ivoire
+Cameroon
+Democratic Republic of the Congo
+Republic of Congo
+Colombia
+Costa Rica
+Cuba
+Czech Republic
+Germany
+Djibouti
+Denmark
+Dominican Republic
+Algeria
+Ecuador
+Egypt
+Eritrea
+Estonia
+Ethiopia
+Finland
+Gabon
+United Kingdom
+Georgia
+Ghana
+Guinea
+The Gambia
+Guinea-Bissau
+Equatorial Guinea
+Greece
+Greenland
+Guatemala
+Guyana
+Honduras
+Croatia
+Haiti
+Hungary
+Indonesia
+India
+Ireland
+Iran
+Iraq
+Iceland
+Israel
+Italy
+Jamaica
+Jordan
+Japan
+Kazakhstan
+Kenya
+Kyrgyzstan
+Cambodia
+Republic of Korea
+Kuwait
+Lao PDR
+Lebanon
+Liberia
+Libya
+Sri Lanka
+Lesotho
+Lithuania
+Luxembourg
+Latvia
+Morocco
+Moldova
+Madagascar
+Mexico
+Macedonia
+Mali
+Myanmar
+Montenegro
+Mongolia
+Mozambique
+Mauritania
+Malawi
+Malaysia
+Namibia
+Niger
+Nigeria
+Nicaragua
+Norway
+Nepal
+Oman
+Pakistan
+Panama
+Peru
+Philippines
+Papua New Guinea
+Poland
+Dem. Rep. Korea
+Paraguay
+Palestine
+Qatar
+Romania
+Rwanda
+Western Sahara
+Saudi Arabia
+Sudan
+South Sudan
+Senegal
+Sierra Leone
+El Salvador
+Serbia
+Suriname
+Slovakia
+Slovenia
+Sweden
+Swaziland
+Syria
+Chad
+Togo
+Thailand
+Tajikistan
+Turkmenistan
+Timor-Leste
+Tunisia
+Turkey
+Taiwan
+Tanzania
+Uganda
+Ukraine
+Uruguay
+Uzbekistan
+Venezuela
+Vietnam
+Yemen
+Zambia
+Zimbabwe
+Somalia
+Kosovo
+South Africa
+New Zealand
+Chile
+Netherlands
+Portugal
+Russian Federation
+Spain
+France
+United States
+French Guiana
+Aruba
+Anguilla
+American Samoa
+Antigua and Barbuda
+Bahrain
+Bahamas
+Saint-Barthélemy
+Bermuda
+Barbados
+Comoros
+Comoros
+Comoros
+Cape Verde
+Curaçao
+Cayman Islands
+Cyprus
+Dominica
+Falkland Islands
+Faeroe Islands
+Federated States of Micronesia
+Grenada
+Guam
+Saint Kitts and Nevis
+Saint Lucia
+Saint-Martin
+Maldives
+Marshall Islands
+Malta
+Northern Mariana Islands
+Montserrat
+Mauritius
+New Caledonia
+Nauru
+Palau
+Puerto Rico
+French Polynesia
+Solomon Islands
+São Tomé and Principe
+Sint Maarten
+Seychelles
+Turks and Caicos Islands
+Tonga
+Trinidad and Tobago
+Tuvalu
+Saint Vincent and the Grenadines
+British Virgin Islands
+United States Virgin Islands
+Vanuatu
+Samoa
+Netherlands
+St. Eustatius (Netherlands)
+Saba (Netherlands)
+Martinique
+Canary Islands (Spain)
+Mayotte
+Reunion
+Guadeloupe
+Fiji
