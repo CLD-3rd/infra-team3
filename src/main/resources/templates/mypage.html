@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>마이페이지 - GlobeTrek</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-4">
+  <h2 class="mb-4">
+    <span th:text="${nickname}">닉네임</span>님의 마이페이지
+    <a href="/user/edit" class="btn btn-sm btn-outline-primary ms-2">회원 정보 수정</a>
+  </h2>
+
+  <!-- 사용자 기본 정보 -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">닉네임</h5>
+          <p class="card-text" th:text="${nickname}"></p>
+          <h5 class="card-title">가입일</h5>
+          <p class="card-text" th:text="${createdAt}"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 마이페이지 기능 카드 -->
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">📅 My Plan <span class="badge bg-secondary">2</span></h5>
+          <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#planModal">일정 보기</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">❤️ My Like List <span class="badge bg-danger">3</span></h5>
+          <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#likeModal">좋아요 보기</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">🗨️ My Comment <span class="badge bg-dark">5</span></h5>
+          <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#commentModal">댓글 보기</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">👥 Plan Matching Friends</h5>
+          <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#friendModal">친구 보기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 모달: My Comment -->
+<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="commentModalLabel">내 댓글</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>날짜</th>
+              <th>여행지</th>
+              <th>댓글 내용</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2025-05-01</td>
+              <td>🇯🇵 일본</td>
+              <td><a href="/gallery/123">너무 좋은 여행지!</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 모달: My Plan -->
+<div class="modal fade" id="planModal" tabindex="-1" aria-labelledby="planModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="planModalLabel">내 일정</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>여행지</th>
+              <th>시작일</th>
+              <th>종료일</th>
+              <th>삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>🇯🇵 일본</td>
+              <td>2025-06-10</td>
+              <td>2025-06-15</td>
+              <td><button class="btn btn-sm btn-outline-danger">삭제</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <hr>
+        <h6>새 일정 추가</h6>
+        <form class="row g-2">
+          <div class="col-md-4">
+            <select class="form-select">
+              <option selected>여행지 선택</option>
+              <option value="JP">일본</option>
+              <option value="FR">프랑스</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <input type="date" class="form-control" placeholder="시작일">
+          </div>
+          <div class="col-md-3">
+            <input type="date" class="form-control" placeholder="종료일">
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">등록</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 모달: My Like List -->
+<div class="modal fade" id="likeModal" tabindex="-1" aria-labelledby="likeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="likeModalLabel">내 좋아요</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>날짜</th>
+              <th>여행지</th>
+              <th>게시글 제목</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2025-05-14</td>
+              <td>🇪🇸 스페인</td>
+              <td><a href="/gallery/456">바르셀로나 골목 탐방</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 모달: Plan Matching Friends -->
+<div class="modal fade" id="friendModal" tabindex="-1" aria-labelledby="friendModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="friendModalLabel">일정 기반 친구 매칭</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body">
+        <!-- 1단계: 내 일정 선택 리스트 -->
+        <h6>내 일정 선택</h6>
+        <form id="matchForm">
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>여행지</th>
+                <th>시작일</th>
+                <th>종료일</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input class="form-check-input" type="radio" name="selectedPlan"></td>
+                <td>🇯🇵 일본</td>
+                <td>2025-06-10</td>
+                <td>2025-06-15</td>
+              </tr>
+              <tr>
+                <td><input class="form-check-input" type="radio" name="selectedPlan"></td>
+                <td>🇫🇷 프랑스</td>
+                <td>2025-11-11</td>
+                <td>2025-11-16</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-end">
+            <button type="button" class="btn btn-success" onclick="showMatchResult()">확인</button>
+          </div>
+        </form>
+
+        <!-- 2단계: 매칭 결과 -->
+        <div id="matchResult" class="mt-4" style="display:none;">
+          <h6>👥 매칭 결과</h6>
+          <p><strong>홍길동</strong>님과 일정이 같으십니다!</p>
+          <p>홍길동님은 <strong>2025년 11월 11일</strong>, <strong>프랑스</strong>를 방문합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+	<script>
+	  fetch('/mypage', {
+	    headers: {
+	      'Authorization': 'Bearer ' + localStorage.getItem('token')
+	    }
+	  })
+	    .then(res => res.json())
+	    .then(data => {
+	      document.getElementById('nickname').innerText = data.nickname + "님의 마이페이지";
+	      document.getElementById('createdAt').innerText = "가입일: " + data.createdAt;
+	    });
+	
+		  function showMatchResult() {
+		    document.getElementById('matchResult').style.display = 'block';
+	 }
+</script>
+</body>
+</html>
