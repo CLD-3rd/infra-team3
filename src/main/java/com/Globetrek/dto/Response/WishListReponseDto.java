@@ -1,14 +1,20 @@
 package com.Globetrek.dto.Response;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 
-@Getter
-public class WishListReponseDto {  
-	private Long pid;
-	
-    @Builder
-    public WishListReponseDto( /* 필드들 매개변수로 받기 */ ) {
-         this.pid = pid;
-    }
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Data
+public class WishListReponseDto {
+    private Integer wishlistId;
+    private Integer countryId;
+    private String countryName;
+    private String flagUrl;
+    private LocalDate travelDate;
+    private LocalDate endDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
