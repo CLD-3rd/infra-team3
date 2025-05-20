@@ -3,9 +3,7 @@ package com.Globetrek.controller;
 import com.Globetrek.dto.Response.CommentResponseDto;
 import com.Globetrek.dto.Response.TravelLogResponseDto;
 import com.Globetrek.service.CommentService;
-import com.Globetrek.service.LikesService;
 import com.Globetrek.service.TravelLogService;
-import com.Globetrek.service.WishListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +38,7 @@ public class TravelLogController {
             return "travelLog";
         } catch (Exception e) {
             e.printStackTrace();
-            return "error";
+            return null;
         }
     }
 }
