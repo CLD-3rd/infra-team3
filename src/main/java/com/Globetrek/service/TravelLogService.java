@@ -10,17 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Service;
-
-import com.Globetrek.entity.TravelLog;
-import com.Globetrek.repository.TravelLogRepository;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class TravelLogService {
     private final TravelLogRepository travelLogRepository;
     private final LikesService likesService;
+
+    public List<TravelLog> getTravelLogsByCountryId(Integer countryId) {
+        return travelLogRepository.findByCountryId(countryId);
+    }
 
     public TravelLogResponseDto getSpecificTL(Integer logId) throws Exception {
         TravelLog travelLog = travelLogRepository.findById(logId).orElseThrow(() -> new Exception("TL NOT FOUND"));
@@ -46,8 +45,6 @@ public class TravelLogService {
                 .liked(likesService.isLiked(userId, logId))
                 .build();
         return responseDto;
-    public List<TravelLog> getTravelLogsByCountryId(Integer countryId) {
-        return travelLogRepository.findByCountryId(countryId);
     }
 
     public void updateCommentCount(Integer logId, boolean increment) {
