@@ -375,7 +375,7 @@
 	top: 50%;
 	margin-top: -16px;
 	z-index: 999;
-	background: url(../images/prevnext.png) 0 0 no-repeat;
+	background: url(../images/gallery/prevnext.png) 0 0 no-repeat;
 	opacity: 1 !important;
 	
 }
