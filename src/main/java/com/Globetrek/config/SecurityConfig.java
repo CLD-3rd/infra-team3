@@ -21,9 +21,9 @@ public class SecurityConfig {
 	 	@Bean
 	    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 	        http
-	            .authorizeHttpRequests((authz) -> authz
-	            		/*.antMatchers("/auth/login", "/auth/signup").permitAll()  // 이 경로는 모두 허용
-        				  .anyRequest().authenticated()  // 그 외 요청은 인증 필요 */
+	            .authorizeHttpRequests(authz -> authz
+	            		 //.requestMatchers().permitAll()   // 나중에 수정, 이 경로는 로그인 업이도 허용
+        				 //.anyRequest().authenticated()  // 그 외 요청은 인증 필요 
 	            		.anyRequest().permitAll() // 모든 요청 허용 (임시)
 	                
 	            )
