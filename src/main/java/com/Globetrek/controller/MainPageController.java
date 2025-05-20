@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,4 +46,16 @@ public class MainPageController {
         model.addAttribute("country", country);
         return "gallery"; // gallery.html
     }
+    
+    
+    //한재선 수정 부분. map.html 검색컨트롤러   
+    @GetMapping("/search")
+    public String searchCountry(@RequestParam("q") String keyword) {
+        return countryRepository.findByNameIgnoreCase(keyword)
+            .map(country -> "redirect:/countries/" + country.getId() + "/gallery")
+            .orElse("redirect:/countries?error=notfound");
+    }  
+    //여기까지
+    
+    
 }
