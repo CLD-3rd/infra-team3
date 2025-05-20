@@ -34,6 +34,7 @@ public class User {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     
+    
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<WishList> wishlists;
 
@@ -42,5 +43,24 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Like> likes;
+    
+    
+	
+	@Builder
+	public User(Integer id, String userName, String password, String nickname,
+			LocalDateTime createdAt) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.password = password;
+		this.nickname = nickname;
+		this.createdAt = createdAt;
+	}
+	
+	public static User of(Integer id, String userName, String password,
+						String nickname, LocalDateTime createdAt) {
+		return new User(id, userName, password, nickname, createdAt);
+	}
+	
 
 }
