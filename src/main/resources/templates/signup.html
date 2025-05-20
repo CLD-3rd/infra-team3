@@ -7,16 +7,19 @@
 <body>
     <div class="signup-box">
         <h2>Signup</h2>
-        <form th:action="@{/signup}" method="post">
-            <input type="text" name="id" placeholder="Id" required
+        <form th:action="@{/auth/signup}" method="post">
+            <input type="text" name="userName" placeholder="Id" required
                     oninvalid="this.setCustomValidity('아이디를 입력해 주세요')"
                     oninput="this.setCustomValidity('')">
             <input type="password" name="password" placeholder="Password" required
                     oninvalid="this.setCustomValidity('비밀번호를 입력해 주세요')"
                     oninput="this.setCustomValidity('')">
-            <input type="text" name="nickname" placeholder="Nickname" required
+            <input type="text" name="nickname" placeholder="Username" required
                     oninvalid="this.setCustomValidity('사용자 이름을 입력해 주세요')"
                     oninput="this.setCustomValidity('')">
+            <div th:if="${error}" style="color: red;">
+    			<p th:text="${error}"></p>
+			</div>
             <button type="submit" class="form-btn">가입하기</button>
         </form> 
     </div>
