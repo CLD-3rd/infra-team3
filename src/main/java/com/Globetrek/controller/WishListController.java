@@ -104,9 +104,6 @@ public class WishListController {
             } else if (e.getMessage().contains("COUNTRY NOT FOUND")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(ErrorResponse.notFound("해당 COUNTRY 존재 안함"));
-            } else if (e.getMessage().contains("WL EXISTS")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(ErrorResponse.notFound("해당 WL EXISTS"));
             }
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(ErrorResponse.internalServerError("내부 서버 오류"));
