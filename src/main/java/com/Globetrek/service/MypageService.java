@@ -33,6 +33,7 @@ public class MypageService {
     private final PasswordEncoder passwordEncoder;
 
     public MypageResponseDto getUserProfile(String username) {
+        /*
         User user = userRepository.findByUserName(username);
         if (user == null) {
             throw new IllegalArgumentException("사용자 정보를 찾을 수 없습니다.");
@@ -40,11 +41,14 @@ public class MypageService {
 
         List<PlanDto> plans = getMyPlans(username);
 
-        return new MypageResponseDto(plans); // 예시로 plans만 넣음. 생성자에 맞게 수정 필요
+        return new MypageResponseDto(plans);
+        */
+        return null;
     }
 
     @Transactional
     public void editUser(String username, MypageRequestDto dto) {
+        /*
         User user = userRepository.findByUserName(username);
         if (user == null) {
             throw new IllegalArgumentException("사용자 정보를 찾을 수 없습니다.");
@@ -66,9 +70,11 @@ public class MypageService {
         }
 
         user.setNickname(dto.getNickname());
+        */
     }
 
     public List<CommentResponseDto> getMyComments(String username) {
+        /*
         List<Comment> comments = mypageRepository.findAllCommentsByUsername(username);
         List<CommentResponseDto> dtos = new ArrayList<>();
         for (Comment c : comments) {
@@ -82,20 +88,25 @@ public class MypageService {
             dtos.add(dto);
         }
         return dtos;
+        */
+        return null;
     }
 
     public List<PlanDto> getMyPlans(String username) {
+        /*
         List<WishList> wishlists = mypageRepository.findAllWishlistsByUsername(username);
         List<PlanDto> result = new ArrayList<>();
         for (WishList w : wishlists) {
-            // TODO: 필요한 필드 채워서 PlanDto에 넣기
-            result.add(new PlanDto(/* 적절한 인자 넣기 */));
+            result.add(new PlanDto());
         }
         return result;
+        */
+        return null;
     }
 
     @Transactional
     public void addMyPlan(String username, PlanRequestDto dto) {
+        /*
         User user = userRepository.findByUserName(username);
         if (user == null) throw new IllegalArgumentException("사용자 없음");
 
@@ -107,7 +118,7 @@ public class MypageService {
         Country country = countryOpt.get();
 
         LocalDate travelDate = LocalDate.parse(dto.getTravelDate());
-        LocalDate endDate = LocalDate.parse(dto.getEndDate()); // 수정된 부분
+        LocalDate endDate = LocalDate.parse(dto.getEndDate());
 
         WishList plan = WishList.builder()
             .user(user)
@@ -117,14 +128,17 @@ public class MypageService {
             .build();
 
         mypageRepository.save(plan);
+        */
     }
 
     @Transactional
     public void deleteMyPlan(String username, Integer planId) {
+        /*
         WishList plan = mypageRepository.findById(planId)
                 .orElseThrow(() -> new IllegalArgumentException("일정(Plan)이 존재하지 않습니다."));
         if (!plan.getUser().getUserName().equals(username))
             throw new IllegalArgumentException("본인의 일정만 삭제할 수 있습니다.");
         mypageRepository.delete(plan);
+        */
     }
 }
