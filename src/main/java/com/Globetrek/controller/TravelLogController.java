@@ -41,7 +41,7 @@ public class TravelLogController {
             return "travelLog";
         } catch (Exception e) {
             e.printStackTrace();
-            return "error";
+            return null;
         }
     }
 }
