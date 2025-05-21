@@ -25,12 +25,12 @@ function getCountries() {
             return res.json();
         })
         .then(countries => {
-            const select = document.getElementById('planCountry');
+    const select = document.getElementById('planCountry');
             select.innerHTML = '<option value="">여행지 선택</option>';
 
-            countries.forEach(country => {
+    countries.forEach(country => {
                 select.innerHTML += `<option value="${country.country_name}">${country.country_name}</option>`;
-            });
+    });
         })
         .catch(err => {
             console.error(err);
@@ -42,8 +42,8 @@ function getCountries() {
 function loadPlans() {
     fetch("/users/current/wishlists", {
         method: "GET",
-        credentials: "same-origin"
-    })
+    credentials: "same-origin"
+  })
         .then(res => {
             if (!res.ok) throw new Error("Failed to fetch WISHLISTS");
             return res.json();
@@ -53,9 +53,9 @@ function loadPlans() {
             const planCount = document.getElementById("planCount");
             planCount.textContent = plans.length;
 
-            let html = "";
+      let html = "";
             plans.forEach(plan => {
-                html += `<tr>
+        html += `<tr>
           <td><img src="${plan.flagUrl}" alt="flag" style="width:20px; height:14px; margin-right:5px;"> ${plan.countryName}</td>
           <td>${plan.travelDate}</td>
           <td>${plan.endDate}</td>
@@ -63,10 +63,10 @@ function loadPlans() {
             <button class="btn btn-sm btn-outline-danger" onclick="deletePlan(${plan.wishlistId})">삭제</button>
           </td>
         </tr>`;
-            });
+      });
 
-            document.getElementById("planListBody").innerHTML = html;
-        })
+      document.getElementById("planListBody").innerHTML = html;
+    })
         .catch(err => {
             console.error(err);
             alert("로그인 필요 또는 서버 오류");

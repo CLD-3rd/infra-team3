@@ -40,7 +40,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `globetrek`.`travel_logs` (
   `log_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NOT NULL,
-  `pic_url` TEXT NULL DEFAULT NULL,
+  -- `pic_url` TEXT NOT NULL,
   `hit` INT NULL DEFAULT '0',
   `like_count` INT NULL DEFAULT '0',
   `comment_count` INT NULL DEFAULT '0',
@@ -162,7 +162,7 @@ INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('9', 'Armenia', 'The first Christian nation, full of monasteries.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('10', 'Aruba', 'Dutch Caribbean island with clear waters.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('11', 'Australia', 'Famous for kangaroos, beaches, and the Outback.');
-INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('13', 'Austria', 'Mozart's homeland, known for classical music and Alps.');
+INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('13', 'Austria', 'Mozart’s homeland, known for classical music and Alps.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('14', 'Azerbaijan', 'The land of fire and Caspian energy.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('15', 'Bahamas', 'Island paradise with turquoise waters.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('16', 'Bahrain', 'A small Gulf kingdom with ancient trade routes.');
@@ -192,7 +192,7 @@ INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('40', 'Central African Republic', 'Rich in minerals but affected by political unrest.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('41', 'Chad', 'Desert country with Lake Chad and Sahel culture.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('42', 'Chile', 'Long coastal nation with deserts and glaciers.');
-INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('43', 'China', 'World's most populous nation with ancient civilization.');
+INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('43', 'China', 'World’s most populous nation with ancient civilization.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('44', 'Colombia', 'Known for coffee, music, and vibrant culture.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('45', 'Comoros', 'Island group in the Indian Ocean with Arabic influence.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('46', 'Costa Rica', 'Eco-tourism haven with rainforests and beaches.');
@@ -230,8 +230,8 @@ INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('76', 'Germany', 'Industrial powerhouse known for cars, beer, and castles.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('77', 'Ghana', 'West African country known for gold and vibrant culture.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('78', 'Greece', 'Birthplace of democracy and Western philosophy.');
-INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('79', 'Greenland', 'World's largest island, mostly covered in ice.');
-INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('80', 'Grenada', '"Spice Island" of the Caribbean with nutmeg and beaches.');
+INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('79', 'Greenland', 'World’s largest island, mostly covered in ice.');
+INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('80', 'Grenada', '“Spice Island” of the Caribbean with nutmeg and beaches.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('81', 'Guadeloupe', 'French Caribbean island with volcanoes and beaches.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('82', 'Guam', 'U.S. territory in the Pacific with military bases.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('83', 'Guatemala', 'Home of Mayan ruins and volcanic highlands.');
@@ -245,7 +245,7 @@ INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('91', 'India', 'Vast and diverse nation known for spices, Bollywood, and the Taj Mahal.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('92', 'Indonesia', 'Island nation with volcanoes, temples, and rich biodiversity.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('93', 'Iran', 'Ancient Persia with rich culture, poetry, and architecture.');
-INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('94', 'Iraq', 'Home to Mesopotamia, one of the world's oldest civilizations.');
+INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('94', 'Iraq', 'Home to Mesopotamia, one of the world’s oldest civilizations.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('95', 'Ireland', 'Emerald Isle with folklore, pubs, and green landscapes.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('96', 'Israel', 'Holy land with sacred sites and modern innovation.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('97', 'Italy', 'Land of pasta, Roman ruins, and Renaissance art.');
@@ -267,7 +267,7 @@ INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('113', 'Luxembourg', 'Small but wealthy country at the heart of Europe.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('114', 'Macedonia', 'Balkan nation with ancient ruins and mountain landscapes.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('115', 'Madagascar', 'Island nation known for unique wildlife and baobab trees.');
-INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('116', 'Malawi', 'The "Warm Heart of Africa," with lakes and friendly people.');
+INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('116', 'Malawi', 'The “Warm Heart of Africa,” with lakes and friendly people.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('117', 'Malaysia', 'Multicultural country with rainforests and modern cities.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('118', 'Maldives', 'Tropical paradise of atolls and luxury resorts.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('119', 'Mali', 'West African country rich in music and desert history.');
@@ -286,14 +286,14 @@ INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('132', 'Mozambique', 'Southeastern African nation with long coastline and culture.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('133', 'Myanmar', 'Southeast Asian country with golden pagodas and complex history.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('134', 'Namibia', 'Desert landscapes and safari adventures in southern Africa.');
-INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('135', 'Nauru', 'World's third smallest country, once rich in phosphate.');
+INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('135', 'Nauru', 'World’s third smallest country, once rich in phosphate.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('136', 'Nepal', 'Himalayan country home to Mount Everest and spiritual heritage.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('137', 'Netherlands', 'Low-lying country known for tulips, canals, and windmills.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('138', 'New Caledonia', 'French Pacific territory with reefs and Kanak culture.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('139', 'New Zealand', 'Island nation with stunning nature and Māori culture.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('140', 'Nicaragua', 'Central American country with lakes and volcanoes.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('141', 'Nigar', 'Saharan country with ancient trade history and deserts.');
-INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('142', 'Nigeria', 'Africa's most populous nation with Nollywood and diverse cultures.');
+INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('142', 'Nigeria', 'Africa’s most populous nation with Nollywood and diverse cultures.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('143', 'Nother Mariana Islands', 'U.S. territory with Pacific beaches and WWII history.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('144', 'Norway', 'Scandinavian country with fjords and high living standards.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('145', 'Oman', 'Arabian country with deserts, forts, and coastal beauty.');
@@ -313,8 +313,8 @@ INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('159', 'Republic of Korea', 'A high-tech nation famous for K-pop, kimchi, and culture.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('160', 'Reunion', 'French island in the Indian Ocean with volcanic landscapes.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('161', 'Romania', 'Eastern European country with castles and Carpathian mountains.');
-INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('162', 'Russian Federation', 'World's largest country spanning Europe and Asia.');
-INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('163', 'Rwanda', 'Known as the "Land of a Thousand Hills" and post-conflict recovery.');
+INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('162', 'Russian Federation', 'World’s largest country spanning Europe and Asia.');
+INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('163', 'Rwanda', 'Known as the “Land of a Thousand Hills” and post-conflict recovery.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('164', 'Saba (Netherlands)', 'Small Caribbean island with pristine diving spots.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('165', 'Saint-Barthélemy', 'French Caribbean island known for luxury and beaches.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('166', 'Saint Kitts and Nevis', 'Twin-island nation with colonial history and lush mountains.');
@@ -334,7 +334,7 @@ INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('180', 'Solomon Islands', 'Pacific nation with WWII history and coral reefs.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('181', 'Somalia', 'Horn of Africa country with a long coastline and complex history.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('182', 'South Africa', 'Diverse nation with wildlife, Cape Town, and apartheid legacy.');
-INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('183', 'South Sudan', 'World's newest country, gaining independence in 2011.');
+INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('183', 'South Sudan', 'World’s newest country, gaining independence in 2011.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('184', 'Spain', 'Known for flamenco, tapas, and historic cities.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('185', 'Sri Lanka', 'Island nation with ancient temples, tea, and beaches.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('186', 'St. Eustatis (Netherlands)', 'Tiny Dutch Caribbean island with volcanic landscapes.');
