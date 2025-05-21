@@ -196,7 +196,9 @@ INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('44', 'Colombia', 'Known for coffee, music, and vibrant culture.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('45', 'Comoros', 'Island group in the Indian Ocean with Arabic influence.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('46', 'Costa Rica', 'Eco-tourism haven with rainforests and beaches.');
-INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('47', 'Côte d\'Ivoire', 'West African country known for cocoa and cultural diversity.');
+
+INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('47', 'Côte d''Ivoire', 'West African country known for cocoa and cultural diversity.');
+
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('48', 'Croatia', 'Adriatic gem with medieval towns and clear seas.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('49', 'Cuba', 'Island nation famous for cigars, music, and vintage cars.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('50', 'Curaçao', 'Dutch Caribbean island with colorful architecture.');
@@ -405,3 +407,4 @@ UPDATE `globetrek`.`travel_logs` SET `comment_count` = '0', `hit` = '2', `like_c
 UPDATE `globetrek`.`travel_logs` SET `comment_count` = '0', `hit` = '3', `like_count` = '2', `created_at` = '2025-05-20 18:00', `updated_at` = '2025-05-20 18:00' WHERE (`log_id` = '15');
 UPDATE `globetrek`.`travel_logs` SET `comment_count` = '0', `hit` = '4', `like_count` = '1', `created_at` = '2025-05-20 18:00', `updated_at` = '2025-05-20 18:00' WHERE (`log_id` = '16');
 
+COMMIT;
