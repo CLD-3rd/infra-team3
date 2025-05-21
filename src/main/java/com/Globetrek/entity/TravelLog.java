@@ -57,5 +57,8 @@ public class TravelLog {
     @OneToMany(mappedBy = "travelLog", cascade = CascadeType.ALL)
     private List<Like> likes;
 
+//    @Column(name = "pic_url")
+//    private String picUrl;
+
 }
 
