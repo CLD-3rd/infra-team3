@@ -22,7 +22,7 @@ public class TravelLogResponseDto {
     @Builder.Default
     private boolean liked = false;
     @Builder.Default
-    private boolean wished = false;
+    private boolean isWished = false;
 	
 //    @Builder
 //    public TravelLogResponseDto( /* 필드들 매개변수로 받기 */ ) {
