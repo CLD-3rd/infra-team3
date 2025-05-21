@@ -43,10 +43,4 @@ public class AuthController {
 			return "signup"; // 회원가입 페이지로 다시
 		}
 	}
-	
-	@GetMapping("/test")
-	public String testPage() {
-	    return "test";  
-	}
-	
 }
