@@ -78,8 +78,7 @@
 
                 <!-- Comments -->
                 <div class="comment-box" th:data-log-id="${mainPhoto.logId}">
-                    <!-- 댓글이 없을 때 표시할 메시지 -->
-                    <div th:if="${comments.empty}" class="no-comments">
+                    <div th:if="${#lists.isEmpty(comments)}" class="no-comments">
                         <p>등록된 댓글이 없습니다.</p>
                     </div>
                     <!-- 댓글 목록 -->
