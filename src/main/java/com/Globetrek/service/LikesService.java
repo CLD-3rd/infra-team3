@@ -1,5 +1,6 @@
 package com.Globetrek.service;
 
+import com.Globetrek.dto.Response.LikeResponseDto;
 import com.Globetrek.entity.Like;
 import com.Globetrek.entity.LikeId;
 import com.Globetrek.entity.TravelLog;
@@ -24,13 +25,8 @@ public class LikesService {
         return likeRepository.existsByTravelLog_IdAndUser_Id(logId, userId);
     }
 
-    @Transactional(readOnly = true)
-    public int getLikeCount(Integer logId) {
-        return travelLogRepository.findById(logId).map(TravelLog::getLikeCount).orElse(0);
-    }
-
-    public void toggleLike(Integer userId, Integer logId) {
-        TravelLog travelLog = travelLogRepository.findById(logId).orElseThrow(() -> new RuntimeException("TL NOT FOUND"));
+    public LikeResponseDto toggleLike(Integer logId, Integer userId) {
+        TravelLog travelLog = travelLogRepository.findById(logId).orElseThrow(() -> new RuntimeException("NOT FOUND"));
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("USER NOT FOUND"));
 
         boolean isLiked = isLiked(userId, logId);
@@ -49,5 +45,20 @@ public class LikesService {
             travelLog.setLikeCount(travelLog.getLikeCount() + 1);
         }
         travelLogRepository.save(travelLog);
+
+        LikeResponseDto response = new LikeResponseDto();
+        response.setLiked(!isLiked);
+        response.setLikeCount(travelLog.getLikeCount());
+        return response;
+    }
+
+    public LikeResponseDto getLikeStatus(Integer logId, Integer userId) {
+        TravelLog travelLog = travelLogRepository.findById(logId).orElseThrow(() -> new RuntimeException("NOT FOUND"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("USER NOT FOUND"));
+
+        LikeResponseDto response = new LikeResponseDto();
+        response.setLiked(isLiked(userId, logId));
+        response.setLikeCount(travelLog.getLikeCount());
+        return response;
     }
 }
