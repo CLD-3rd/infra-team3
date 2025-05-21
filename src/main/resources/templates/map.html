@@ -53,15 +53,17 @@
 						<!-- START #fh5co-menu-wrap -->
 						<nav id="fh5co-menu-wrap" role="navigation">
 							<ul class="sf-menu" id="fh5co-primary-menu">
-								<li sec:authorize="isAuthenticated()">
-                                    <a th:text="${#authentication.principal.nickname + '님'}" style="font-size: 25px;"></a>
-                                </li>
-                                <li sec:authorize="isAnonymous()">
-                                    <a th:href="@{/auth/login}" style="font-size: 25px;">Login</a>
-                                </li>
-								<li><a th:href="@{/mypage}" style="font-size: 25px;">MyPage</a></li>
-								<li><a th:href="@{/register}" style="font-size: 25px;">Register</a></li>
-							</ul>
+    <li sec:authorize="isAuthenticated()">
+        <a th:text="${#authentication.principal.nickname + '님'}" style="font-size: 25px;"></a>
+    </li>
+    <li sec:authorize="isAnonymous()">
+        <a th:href="@{/auth/login}" style="font-size: 25px;">Login</a>
+    </li>
+    <li sec:authorize="isAnonymous()">
+        <a th:href="@{/auth/signup}" style="font-size: 25px;">Register</a>
+    </li>
+    <li><a th:href="@{/mypage}" style="font-size: 25px;">MyPage</a></li>
+</ul>
 						</nav>
 					</div>
 				</div>
