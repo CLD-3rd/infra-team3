@@ -23,9 +23,7 @@ public class AuthController {
 	}
 
 	@GetMapping("/login")
-	public String login(@RequestParam(value="redirect", required=false) String redirect,
-            Model model) {
-		model.addAttribute("redirect", redirect);
+	public String login() {
 		return "login";
 	}
 
