@@ -9,85 +9,115 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-<div class="container">
-    <div class="photo-section">
-        <img th:src="${mainPhoto.picUrl}" th:alt="${mainPhoto.title}" alt="Main Photo">
-    </div>
+    <div class="container">
+        <!-- Left -->
+        <div class="left">
+            <!-- Main -->
+            <div class="photo-section">
+                <img th:src="${mainPhoto.picUrl}" th:alt="${mainPhoto.title}" alt="Main Photo">
+            </div>
 
-    <div class="info-section">
-        <h2 th:text="${mainPhoto.title}">TITLE</h2>
-        <input type="hidden" id="currentUserId" th:value="${currentUserId}" />
-        <div class="meta">📅 <span th:text="${#temporals.format(mainPhoto.createdAt, 'MMMM dd, yyyy')}">May 19,
-                    2025</span></div>
-        <!-- Like toggle -->
-        <div class="likes">
-            <span class="like-count" th:text="'❤️ ' + ${mainPhoto.likeCount} + ' Likes'">❤️ 1 Likes</span>
-            <button type="button" class="like-btn" th:data-log-id="${mainPhoto.logId}" th:classappend="${mainPhoto.liked} ? 'liked' : ''" th:text="${mainPhoto.liked} ? '💔 Unlike' : '❤️ Like'">❤️</button>
-        </div>
-
-        <!-- Wishlist popover -->
-        <div class="wishlist-popover-container" style="position: relative; margin-top:10px;">
-            <button id="wishlistToggleBtn" type="button" th:text="${mainPhoto.isWished} ? 'Wished' : 'Wish'">Wish</button>
-            <div id="wishlistPopover" class="wishlist-popover-content"
-                 style="display:none; position:absolute; top:100%; left:0; background:white; border:1px solid #cccccc; border-radius:5px; box-shadow:0 2px 8px rgba(0,0,0,0.2); padding:15px; z-index:100;">
-                <h4>Wishlist 등록</h4>
-                <div class="wishlist-form">
-                    <form th:action="@{/users/{userId}/wishlists(userId=${currentUserId})}" method="post" id="wishlistForm">
-                        <input type="hidden" name="country_id" th:value="${mainPhoto.countryId}"/>
-                        <label>
-                            여행 시작:
-                            <input type="date" name="travel_date"/>
-                        </label><br/>
-                        <label>
-                            여행 종료:
-                            <input type="date" name="end_date"/>
-                        </label><br/>
-                        <button type="submit">등록</button>
-                    </form>
+            <!-- Related -->
+            <div class="related-section">
+                <div class="related-title">연관된 사진</div>
+                <div class="related-photos">
+                    <div th:each="relatedPhoto : ${relatedPhotos}">
+                        <a th:href="@{/gallery/{id}(id=${relatedPhoto.logId})}">
+                            <img th:src="${relatedPhoto.picUrl}" alt="Related Photo">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="country-info">
-            📍 관련 국가: <span th:text="${mainPhoto.countryName}">South Korea</span>
-        </div>
+        <!-- Right -->
+        <div class="right">
+            <div class="info-section">
+                <!-- Info -->
+                <h2 th:text="${mainPhoto.title}">TITLE</h2>
+                <input type="hidden" id="currentUserId" th:value="${currentUserId}" />
+                <div class="meta">📅 <span th:text="${#temporals.format(mainPhoto.updatedAt, 'MMMM dd, yyyy')}">May 19,
+                        2025</span></div>
 
-        <!-- comment dto -->
-        <div class="comment-box" th:data-log-id="${mainPhoto.logId}">
-            <div class="comment" th:each="comment : ${comments}">
-                <p th:data-comment-id="${comment.commentId}">
-                    <strong th:text="${comment.userNickname}">작성자</strong>:
-                    <span class="comment-content" th:text="${comment.content}"></span>
-                    <button class="edit-btn" th:if="${comment.userId == currentUserId}">수정</button>
-                    <button class="delete-btn" th:if="${comment.userId == currentUserId}">삭제</button>
-                    <span class="edit-form" style="display:none;">
-                        <input type="text" class="edit-input" th:value="${comment.content}" />
-                        <button class="save-btn">Save</button>
-                        <button class="cancel-btn">Cancel</button>
-                    </span>
-                </p>
+                <!-- Like, wish -->
+                <div class="likes">
+                    <span class="like-count" th:text="'❤️ ' + ${mainPhoto.likeCount} + ' Likes'">❤️ 1 Likes</span>
+                    <button type="button" class="like-btn" th:data-log-id="${mainPhoto.logId}" th:classappend="${mainPhoto.liked} ? 'liked' : ''" th:text="${mainPhoto.liked} ? '💔Unlike' : '❤️Like'">❤️Like</button>
+                    <button id="wishlistToggleBtn" type="button" th:text="${mainPhoto.isWished} ? '✔️ Wished' : '♡ Wish'">♡ Wish</button>
+                </div>
+
+                <!-- WL Popover -->
+                <div class="wishlist-popover-container">
+                    <div id="wishlistPopover" class="wishlist-popover-content">
+                        <h4>Wishlist 등록</h4>
+                        <div class="wishlist-form">
+                            <form th:action="@{/users/{userId}/wishlists(userId=${currentUserId})}" method="post" id="wishlistForm">
+                                <input type="hidden" name="country_id" th:value="${mainPhoto.countryId}"/>
+                                <label>
+                                    여행 시작:
+                                    <input type="date" name="travel_date"/>
+                                </label>
+                                <label>
+                                    여행 종료:
+                                    <input type="date" name="end_date"/>
+                                </label>
+                                <button type="submit">등록</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Country info -->
+                <div class="country-info">
+                    📍 <a th:href="@{/countries/{countryId}/gallery(countryId=${mainPhoto.countryId})}" class="country-link">
+                        <span th:text="${mainPhoto.countryName}">South Korea</span>
+                    </a>
+                </div>
+
+                <!-- Comments -->
+                <div class="comment-box" th:data-log-id="${mainPhoto.logId}">
+                    <div class="comment" th:each="comment : ${comments}" th:attr="data-comment-id=${comment.commentId}">
+                        <div class="comment-header">
+                            <div class="comment-info">
+                                <strong th:text="${comment.userNickname}">작성자</strong>
+                                <span class="comment-date" th:text="${#temporals.format(comment.updatedAt, 'yyyy.MM.dd HH:mm')}">2024.03.21 14:30</span>
+                            </div>
+                            <div class="comment-actions">
+                                <div class="default-actions" th:if="${comment.userId == currentUserId}">
+                                    <button class="edit-btn">수정</button>
+                                    <button class="delete-btn">삭제</button>
+                                </div>
+                                <div class="edit-actions" style="display: none;">
+                                    <button class="save-btn">저장</button>
+                                    <button class="cancel-btn">취소</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment-body">
+                            <div class="comment-content" th:text="${comment.content}"></div>
+                            <div class="edit-form" style="display: none;">
+                                <textarea class="edit-input" th:text="${comment.content}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comment -->
+                <div class="comment-section">
+                    <form id="commentForm" class="comment-form">
+                        <div class="comment-input-row">
+                            <textarea name="content" placeholder="댓글을 입력하세요..."></textarea>
+                            <button type="submit">댓글 등록</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="comment-section">
-            <form id="commentForm" class="comment-form">
-                <textarea name="content" placeholder="댓글을 입력하세요..."></textarea>
-                <button type="submit">댓글 등록</button>
-            </form>
-        </div>
-
     </div>
-</div>
 
-<!-- relatedPhotos dto -->
-<div class="related-section">
-    <div class="related-title">연관된 사진</div>
-    <div class="related-photos">
-        <div th:each="relatedPhoto : ${relatedPhotos}">
-            <a th:href="@{/gallery/{id}(id=${relatedPhoto.logId})}">
-                <img th:src="${relatedPhoto.picUrl}" alt="Related Photo">
-            </a>
-        </div>
+    <!-- Lightbox -->
+    <div class="lightbox-overlay" id="lightbox">
+        <img src="" alt="Expanded Photo">
     </div>
-</div>
 </body>
 </html>
