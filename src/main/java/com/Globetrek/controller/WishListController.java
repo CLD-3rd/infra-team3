@@ -5,10 +5,12 @@ import com.Globetrek.dto.Response.ErrorResponse;
 import com.Globetrek.dto.Response.PageInfo;
 import com.Globetrek.dto.Response.WLResponse;
 import com.Globetrek.dto.Response.WishListReponseDto;
+import com.Globetrek.dto.security.LoginDetails;
 import com.Globetrek.service.WishListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,26 +27,16 @@ public class WishListController {
                                              @RequestParam(defaultValue = "1") int page,
                                              @RequestParam(defaultValue = "10") int size,
                                              @RequestParam(defaultValue = "createdAt") String sort,
-                                             @RequestHeader(value = "Authorization", required = false) String token) {
+                                             @AuthenticationPrincipal LoginDetails loginDetails) {
         try {
-            // TODO : get JWT userId
-            Integer currentUserId = 1;
-            
-            // JWT 토큰이 있는 경우 토큰에서 userId 추출
-            /*
-            if (token != null && token.startsWith("Bearer ")) {
-                String jwtToken = token.substring(7);
-                Claims claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(jwtToken)
-                    .getBody();
-                currentUserId = Long.parseLong(claims.getSubject());
+            if (loginDetails == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ErrorResponse.unauthorized("로그인이 필요합니다."));
             }
-            */
 
-            if (!currentUserId.equals(userId)) {
+            if (!loginDetails.getUser().getId().equals(userId)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body(ErrorResponse.forbidden("USER ID 다름"));
+                        .body(ErrorResponse.forbidden("다른 사용자의 위시리스트를 조회할 수 없습니다."));
             }
 
             List<WishListReponseDto> wishlists = wishListService.getAllWishlists(userId, page, size, sort);
@@ -52,6 +44,10 @@ public class WishListController {
 
             return ResponseEntity.ok(WLResponse.success(wishlists, pageInfo));
         } catch (Exception e) {
+            if (e.getMessage().contains("USER NOT FOUND")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(ErrorResponse.notFound("해당 USER 존재 안함"));
+            }
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(ErrorResponse.internalServerError("내부 서버 오류"));
         }
@@ -60,26 +56,16 @@ public class WishListController {
     @GetMapping("/{userId}/wishlists/{wishlistId}")
     public ResponseEntity<?> getWishlist(@PathVariable Integer userId,
                                          @PathVariable Integer wishlistId,
-                                         @RequestHeader(value = "Authorization", required = false) String token) {
+                                         @AuthenticationPrincipal LoginDetails loginDetails) {
         try {
-            // TODO : get JWT userId
-            Integer currentUserId = 1;
-            
-            // JWT 토큰이 있는 경우 토큰에서 userId 추출
-            /*
-            if (token != null && token.startsWith("Bearer ")) {
-                String jwtToken = token.substring(7);
-                Claims claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(jwtToken)
-                    .getBody();
-                currentUserId = Long.parseLong(claims.getSubject());
+            if (loginDetails == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ErrorResponse.unauthorized("로그인이 필요합니다."));
             }
-            */
 
-            if (!currentUserId.equals(userId)) {
+            if (!loginDetails.getUser().getId().equals(userId)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body(ErrorResponse.forbidden("USER ID 다름"));
+                        .body(ErrorResponse.forbidden("다른 사용자의 위시리스트를 조회할 수 없습니다."));
             }
 
             WishListReponseDto wishlist = wishListService.getWishlist(userId, wishlistId);
@@ -103,36 +89,26 @@ public class WishListController {
     @PostMapping("/{userId}/wishlists")
     public ResponseEntity<?> createWishlist(@PathVariable Integer userId,
                                             @RequestBody WishListRequestDto wishListRequestDto,
-                                            @RequestHeader(value = "Authorization", required = false) String token) {
+                                            @AuthenticationPrincipal LoginDetails loginDetails) {
         try {
-            // TODO : get JWT userId
-            Integer currentUserId = 1;
-            
-            // JWT 토큰이 있는 경우 토큰에서 userId 추출
-            /*
-            if (token != null && token.startsWith("Bearer ")) {
-                String jwtToken = token.substring(7);
-                Claims claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(jwtToken)
-                    .getBody();
-                currentUserId = Long.parseLong(claims.getSubject());
+            if (loginDetails == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ErrorResponse.unauthorized("로그인이 필요합니다."));
             }
-            */
 
-            if (!currentUserId.equals(userId)) {
+            if (!loginDetails.getUser().getId().equals(userId)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body(ErrorResponse.forbidden("USER ID 다름"));
+                        .body(ErrorResponse.forbidden("다른 사용자의 위시리스트를 생성할 수 없습니다."));
             }
 
             WishListReponseDto createdWishlist = wishListService.createWishlist(userId, wishListRequestDto);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(WLResponse.success(createdWishlist));
-        } catch (RuntimeException e) {
-            if (e.getMessage().contains("not found")) {
+        } catch (Exception e) {
+            if (e.getMessage().contains("USER NOT FOUND")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(ErrorResponse.notFound("해당 국가 존재 안함"));
-            } else if (e.getMessage().contains("WL EXISTS")) {
+                        .body(ErrorResponse.notFound("해당 USER 존재 안함"));
+            } else if (e.getMessage().contains("DUPLICATE")) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
                         .body(ErrorResponse.conflict("이미 동일한 날짜로 등록된 위시리스트가 있습니다."));
             } else if (e.getMessage().contains("date")) {
@@ -151,26 +127,16 @@ public class WishListController {
     public ResponseEntity<?> updateWishlist(@PathVariable Integer userId,
                                             @PathVariable Integer wishlistId,
                                             @RequestBody WishListRequestDto wishListRequestDto,
-                                            @RequestHeader(value = "Authorization", required = false) String token) {
+                                            @AuthenticationPrincipal LoginDetails loginDetails) {
         try {
-            // TODO : get JWT userId
-            Integer currentUserId = 1;
-            
-            // JWT 토큰이 있는 경우 토큰에서 userId 추출
-            /*
-            if (token != null && token.startsWith("Bearer ")) {
-                String jwtToken = token.substring(7);
-                Claims claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(jwtToken)
-                    .getBody();
-                currentUserId = Long.parseLong(claims.getSubject());
+            if (loginDetails == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ErrorResponse.unauthorized("로그인이 필요합니다."));
             }
-            */
 
-            if (!currentUserId.equals(userId)) {
+            if (!loginDetails.getUser().getId().equals(userId)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body(ErrorResponse.forbidden("USER ID 다름"));
+                        .body(ErrorResponse.forbidden("다른 사용자의 위시리스트를 수정할 수 없습니다."));
             }
 
             WishListReponseDto updatedWishlist = wishListService.updateWishlist(userId, wishlistId, wishListRequestDto);
@@ -200,26 +166,16 @@ public class WishListController {
     @DeleteMapping("/{userId}/wishlists/{wishlistId}")
     public ResponseEntity<?> deleteWishlist(@PathVariable Integer userId,
                                             @PathVariable Integer wishlistId,
-                                            @RequestHeader(value = "Authorization", required = false) String token) {
+                                            @AuthenticationPrincipal LoginDetails loginDetails) {
         try {
-            // TODO : get JWT userId
-            Integer currentUserId = 1;
-            
-            // JWT 토큰이 있는 경우 토큰에서 userId 추출
-            /*
-            if (token != null && token.startsWith("Bearer ")) {
-                String jwtToken = token.substring(7);
-                Claims claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(jwtToken)
-                    .getBody();
-                currentUserId = Long.parseLong(claims.getSubject());
+            if (loginDetails == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ErrorResponse.unauthorized("로그인이 필요합니다."));
             }
-            */
 
-            if (!currentUserId.equals(userId)) {
+            if (!loginDetails.getUser().getId().equals(userId)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                        .body(ErrorResponse.forbidden("USER ID 다름"));
+                        .body(ErrorResponse.forbidden("다른 사용자의 위시리스트를 삭제할 수 없습니다."));
             }
 
             wishListService.deleteWishlist(userId, wishlistId);
@@ -240,4 +196,61 @@ public class WishListController {
         }
     }
 
+    @PostMapping("/current/wishlists")
+    public ResponseEntity<?> createCurrentUserWishlist(@RequestBody WishListRequestDto wishListRequestDto,
+                                                     @AuthenticationPrincipal LoginDetails loginDetails) {
+        try {
+            if (loginDetails == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ErrorResponse.unauthorized("로그인이 필요합니다."));
+            }
+
+            Integer userId = loginDetails.getUser().getId();
+            WishListReponseDto createdWishlist = wishListService.createWishlist(userId, wishListRequestDto);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(WLResponse.success(createdWishlist));
+        } catch (Exception e) {
+            if (e.getMessage().contains("USER NOT FOUND")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(ErrorResponse.notFound("해당 USER 존재 안함"));
+            } else if (e.getMessage().contains("DUPLICATE")) {
+                return ResponseEntity.status(HttpStatus.CONFLICT)
+                        .body(ErrorResponse.conflict("이미 동일한 날짜로 등록된 위시리스트가 있습니다."));
+            } else if (e.getMessage().contains("date")) {
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                        .body(ErrorResponse.unprocessableEntity("travel date > end date"));
+            } else if (e.getMessage().contains("COUNTRY NOT FOUND")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(ErrorResponse.notFound("해당 COUNTRY 존재 안함"));
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ErrorResponse.internalServerError("내부 서버 오류"));
+        }
+    }
+
+    @GetMapping("/current/wishlists")
+    public ResponseEntity<?> getCurrentUserWishlists(@RequestParam(defaultValue = "1") int page,
+                                                   @RequestParam(defaultValue = "10") int size,
+                                                   @RequestParam(defaultValue = "createdAt") String sort,
+                                                   @AuthenticationPrincipal LoginDetails loginDetails) {
+        try {
+            if (loginDetails == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ErrorResponse.unauthorized("로그인이 필요합니다."));
+            }
+
+            Integer userId = loginDetails.getUser().getId();
+            List<WishListReponseDto> wishlists = wishListService.getAllWishlists(userId, page, size, sort);
+            PageInfo pageInfo = wishListService.getPageInfo(userId, page, size);
+
+            return ResponseEntity.ok(WLResponse.success(wishlists, pageInfo));
+        } catch (Exception e) {
+            if (e.getMessage().contains("USER NOT FOUND")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(ErrorResponse.notFound("해당 USER 존재 안함"));
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ErrorResponse.internalServerError("내부 서버 오류"));
+        }
+    }
 }

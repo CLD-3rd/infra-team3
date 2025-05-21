@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Travel Log</title>
-
+    <link rel="icon" type="image/png" th:href="@{/images/globetrek_logo.png}">
     <link rel="stylesheet" th:href="@{/css/TLstyle.css}">
     <script th:src="@{/js/TLscript.js}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -42,16 +42,18 @@
                 <!-- Like, wish -->
                 <div class="likes">
                     <span class="like-count" th:text="'❤️ ' + ${mainPhoto.likeCount} + ' Likes'">❤️ 1 Likes</span>
-                    <button type="button" class="like-btn" th:data-log-id="${mainPhoto.logId}" th:classappend="${mainPhoto.liked} ? 'liked' : ''" th:text="${mainPhoto.liked} ? '💔Unlike' : '❤️Like'">❤️Like</button>
-                    <button id="wishlistToggleBtn" type="button" th:text="${mainPhoto.isWished} ? '✔️ Wished' : '♡ Wish'">♡ Wish</button>
+                    <!-- 로그인한 사용자에게만 좋아요 버튼 표시 -->
+                    <button th:if="${currentUserId != null}" type="button" class="like-btn" th:data-log-id="${mainPhoto.logId}" th:classappend="${mainPhoto.liked} ? 'liked' : ''" th:text="${mainPhoto.liked} ? '💔Unlike' : '❤️Like'">❤️Like</button>
+                    <!-- 로그인한 사용자에게만 위시리스트 버튼 표시 -->
+                    <button th:if="${currentUserId != null}" id="wishlistToggleBtn" type="button" th:text="${mainPhoto.isWished} ? '✔️ Wished' : '♡ Wish'">♡ Wish</button>
                 </div>
 
                 <!-- WL Popover -->
-                <div class="wishlist-popover-container">
+                <div class="wishlist-popover-container" th:if="${currentUserId != null}">
                     <div id="wishlistPopover" class="wishlist-popover-content">
                         <h4>Wishlist 등록</h4>
                         <div class="wishlist-form">
-                            <form th:action="@{/users/{userId}/wishlists(userId=${currentUserId})}" method="post" id="wishlistForm">
+                            <form th:action="@{/users/current/wishlists}" method="post" id="wishlistForm">
                                 <input type="hidden" name="country_id" th:value="${mainPhoto.countryId}"/>
                                 <label>
                                     여행 시작:
@@ -76,6 +78,10 @@
 
                 <!-- Comments -->
                 <div class="comment-box" th:data-log-id="${mainPhoto.logId}">
+                    <div th:if="${#lists.isEmpty(comments)}" class="no-comments">
+                        <p>등록된 댓글이 없습니다.</p>
+                    </div>
+                    <!-- 댓글 목록 -->
                     <div class="comment" th:each="comment : ${comments}" th:attr="data-comment-id=${comment.commentId}">
                         <div class="comment-header">
                             <div class="comment-info">
@@ -103,13 +109,16 @@
                 </div>
 
                 <!-- Comment -->
-                <div class="comment-section">
+                <div class="comment-section" th:if="${currentUserId != null}">
                     <form id="commentForm" class="comment-form">
                         <div class="comment-input-row">
                             <textarea name="content" placeholder="댓글을 입력하세요..."></textarea>
                             <button type="submit">댓글 등록</button>
                         </div>
                     </form>
+                </div>
+                <div class="comment-section" th:if="${currentUserId == null}">
+                    <p class="login-message">댓글을 작성하려면 <a href="/auth/login">로그인</a>이 필요합니다.</p>
                 </div>
             </div>
         </div>

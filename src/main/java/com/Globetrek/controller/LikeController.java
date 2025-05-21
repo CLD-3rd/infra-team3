@@ -2,72 +2,56 @@ package com.Globetrek.controller;
 
 import com.Globetrek.dto.Response.ErrorResponse;
 import com.Globetrek.dto.Response.LikeResponseDto;
+import com.Globetrek.dto.security.LoginDetails;
 import com.Globetrek.service.LikesService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/gallery")
 public class LikeController {
     private final LikesService likesService;
 
-    @PostMapping("/{log_id}/likes")
-    public ResponseEntity<?> toggleLike(@PathVariable("log_id") Integer logId,
-                                      @RequestHeader(value = "Authorization", required = false) String token) {
+    @PostMapping("/{logId}/likes")
+    public ResponseEntity<?> toggleLike(@PathVariable Integer logId,
+                                      @AuthenticationPrincipal LoginDetails loginDetails) {
         try {
-            // TODO : get JWT userId
-            Integer userId = 1;
-            
-            // JWT 토큰이 있는 경우 토큰에서 userId 추출
-            /*
-            if (token != null && token.startsWith("Bearer ")) {
-                String jwtToken = token.substring(7);
-                Claims claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(jwtToken)
-                    .getBody();
-                userId = Long.parseLong(claims.getSubject());
-            }
-            */
-
-            // Get current like state
-            boolean currentState = likesService.isLiked(userId, logId);
-            log.info("Current like state: {}", currentState);
-
-            likesService.toggleLike(userId, logId);
-
-            // Get new like count
-            int likeCount = likesService.getLikeCount(logId);
-            log.info("New like count: {}", likeCount);
-
-            // Create response DTO with the new state (opposite of current state)
-            LikeResponseDto response = new LikeResponseDto();
-            response.setLiked(!currentState);
-            response.setLikeCount(likeCount);
-
-            log.info("Response DTO: liked={}, likeCount={}", response.isLiked(), response.getLikeCount());
-
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            log.error("Error in toggleLike: ", e);
-            if (e.getMessage().contains("TL NOT FOUND")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(ErrorResponse.notFound("해당 게시물 존재 안함"));
-            } else if (e.getMessage().contains("unauthorized")) {
+            if (loginDetails == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body(ErrorResponse.unauthorized("인증 필요"));
-            } else if (e.getMessage().contains("USER NOT FOUND")) {
+                        .body(ErrorResponse.unauthorized("로그인이 필요합니다."));
+            }
+
+            LikeResponseDto response = likesService.toggleLike(logId, loginDetails.getUser().getId());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            if (e.getMessage().contains("NOT FOUND")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(ErrorResponse.notFound("해당 USER 존재 안함"));
+                        .body(ErrorResponse.notFound("해당 게시물이 존재하지 않습니다."));
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ErrorResponse.internalServerError("내부 서버 오류"));
+        }
+    }
+
+    @GetMapping("/{logId}/likes")
+    public ResponseEntity<?> getLikeStatus(@PathVariable Integer logId,
+                                         @AuthenticationPrincipal LoginDetails loginDetails) {
+        try {
+            if (loginDetails == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ErrorResponse.unauthorized("로그인이 필요합니다."));
+            }
+
+            LikeResponseDto response = likesService.getLikeStatus(logId, loginDetails.getUser().getId());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            if (e.getMessage().contains("NOT FOUND")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(ErrorResponse.notFound("해당 게시물이 존재하지 않습니다."));
             }
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(ErrorResponse.internalServerError("내부 서버 오류"));
