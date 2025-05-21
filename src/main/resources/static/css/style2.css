@@ -1,76 +1,15 @@
 @import "reset.css";
 @import "skeleton.css";
 @import "font-awesome.css";
-@import "superfish.css";
+@import "superfish2.css";
 
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400);
 @import url(//fonts.googleapis.com/css?family=Open+Sans:300);
 @import url(//fonts.googleapis.com/css?family=Open+Sans:600);
 @import url(//fonts.googleapis.com/css?family=PT+Sans+Narrow);
 
-html {
-	width: 100%;
-
-}
-a[href^="tel:"] {
- color: inherit;
- text-decoration: none;
-}
-
-* {
-	-webkit-text-size-adjust: none;
-}
-
-body {
-	position: relative;
-	min-width: 960px;
-    background-color: #002141;
-    color: #737272;
-    font: 14px/20px 'Open Sans', sans-serif;
-}
-
-.ic {
-	border:0;
-	float:right;
-	background:#fff;
-	color:#f00;
-	width:50%;
-	line-height:10px;
-	font-size:10px;
-	margin:-220% 0 0 0;
-	overflow:hidden;
-	padding:0
-}
-
-strong {
-	font-weight: 700;
-}
-
-address {
-	font-style: normal;
-}
-
-p {
-	margin-bottom: 20px;
-}
-
-.p1 {
-    margin-bottom: 14px;
-}
-
-input {
-	border-radius: 0 !important;
-	outline: none !important;
-}
 
 
-img {
-	max-width: 100%;
-}
-
-
-
-/****Heads****/
 
 
 h1, h2, h3, h4, h5, h6 {
@@ -129,45 +68,10 @@ h5 {
     margin-bottom: 29px;
 }
 
-/****Lists****/
 
-
-ul {
-	padding: 0;
-	margin: 0;
-	list-style: none;
-}
-
-ul.list {
-    margin-bottom: 2px;
-}
-
-
-ul.list+h3.head1 {
-    padding-top: 79px;
-}
-
-ul.list li {
-    font-size: 18px;
-    padding-left: 21px;
-    background: url(../images/marker.png) 0 6px no-repeat;
-}
-
-ul.list li+li {
-    margin-top: 10px;
-}
-
-ul.list + a.link1 {
-    padding-left: 25px;
-    padding-right: 22px;
-    border-radius: 11px;
-}
 
 /****Links****/
 
-.low {
-    text-transform: none;
-}
 
 a {
 	text-decoration: none;
@@ -177,6 +81,7 @@ a {
 	-o-transition: 0.5s ease;
 	-webkit-transition: 0.5s ease;
 }
+
 
 a:hover {
 	color: #c73430;
@@ -203,19 +108,6 @@ a.btn:hover {
 }
 
 /****classes****/
-
-.mb0 {
-	margin-bottom: 0px !important;
-}
-.m0 {
-	margin: 0 !important;
-}
-.pad0 {
-	padding: 0 !important;
-}
-
-.pad1 {
-}
 
 
 .img_inner {
@@ -277,51 +169,7 @@ a.btn:hover {
 .nowrap {
     white-space: nowrap;
 }
-/*header*/
 
-header {
-	display: block;
-    background: url(../images/slide.jpg) center 0 repeat-x;
-    -webkit-background-size: 100% auto;
-    -moz-background-size: 100% auto;
-    -ms-background-size: 100% auto;
-    -o-background-size: 100% auto;
-    background-size: 100% auto;
-    padding-bottom: 98px;
-}
-
-.page1 header {
-    background: none;
-    position: absolute;
-    left: 0;
-    z-index: 999;
-    right: 0;
-    top: 0;
-    padding-bottom: 0;
-}
-
-header h1 {
-	position: relative;
-	text-align: center;
-}
-
-
-header h1 a {
-	display: inline-block;
-	overflow: hidden;
-	width: 190px;
-    height: 57px;
-	font-size: 0;
-	line-height: 0;
-	
-	text-indent: -999px;
-	transition: 0s ease;
-	-o-transition: 0s ease;
-	-webkit-transition: 0s ease;
-}
-header h1 a img {
-	display: block;
-}
 
 /**Content**/
 
@@ -746,13 +594,6 @@ body {
     min-width: 420px;
 }
 
-header {
-    -webkit-background-size: auto auto !important;
-    -moz-background-size:  auto auto !important;
-    -ms-background-size:  auto auto !important;
-    -o-background-size:  auto auto !important;
-    background-size:  auto auto !important;
-}
 
 #bookingForm {
     margin-right: 0;
@@ -821,13 +662,6 @@ header {
     padding-top: 40px;
 }
 
-header h1 {
-	display: block;
-	width: auto;
-    position: relative;
-	height: auto;
-    margin-bottom: 20px;
-}
 
 .img_inner {
     width: 100% !important;
@@ -847,16 +681,6 @@ h1 a {
 	width: 100%;
 }
 
-header h1 {
-    float: none;
-    text-align: center;
-}
-
-header h1 a {
- 	width: auto;
- 	display: inline-block;
-    height: auto;
-}
 
 
  .map {
@@ -886,9 +710,6 @@ header h1 a {
     float: none;
 }
 
-.ui-datepicker {
-    width: 280px;
-}
 
 }
 
@@ -901,9 +722,5 @@ header h1 a {
     width: 210px;
 }
 
-.ui-datepicker {
-    left: 50% !important;
-    margin-left: -140px;
-}
 
 }
