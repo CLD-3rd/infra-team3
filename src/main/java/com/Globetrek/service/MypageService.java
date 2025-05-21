@@ -14,16 +14,14 @@ import com.Globetrek.repository.UserRepository;
 import com.Globetrek.repository.CountryRepository;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder; // 추가
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import java.time.LocalDate;
-
 
 @RequiredArgsConstructor
 @Service
@@ -32,9 +30,8 @@ public class MypageService {
     private final MypageRepository mypageRepository;
     private final UserRepository userRepository;
     private final CountryRepository countryRepository;
-    private final PasswordEncoder passwordEncoder; // ⭐ 추가
+    private final PasswordEncoder passwordEncoder;
 
-    // ✅ 마이페이지 정보 + 일정(Plan)만 포함 (좋아요 제거)
     public MypageResponseDto getUserProfile(String username) {
         User user = userRepository.findByUserName(username);
         if (user == null) {
@@ -43,19 +40,16 @@ public class MypageService {
 
         List<PlanDto> plans = getMyPlans(username);
 
-        return new MypageResponseDto(
-        );
+        return new MypageResponseDto(plans); // 예시로 plans만 넣음. 생성자에 맞게 수정 필요
     }
 
     @Transactional
     public void editUser(String username, MypageRequestDto dto) {
         User user = userRepository.findByUserName(username);
-
         if (user == null) {
             throw new IllegalArgumentException("사용자 정보를 찾을 수 없습니다.");
         }
 
-        // ⭐⭐⭐ 수정: passwordEncoder로 비밀번호 확인
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
@@ -71,7 +65,7 @@ public class MypageService {
             }
         }
 
-        user.setNickname(dto.getNickname()); // JPA dirty checking
+        user.setNickname(dto.getNickname());
     }
 
     public List<CommentResponseDto> getMyComments(String username) {
@@ -90,24 +84,21 @@ public class MypageService {
         return dtos;
     }
 
-    // ✅ 일정(Plan) 목록 조회 (WishList 기준)
     public List<PlanDto> getMyPlans(String username) {
         List<WishList> wishlists = mypageRepository.findAllWishlistsByUsername(username);
         List<PlanDto> result = new ArrayList<>();
         for (WishList w : wishlists) {
-            result.add(new PlanDto(
-            ));
+            // TODO: 필요한 필드 채워서 PlanDto에 넣기
+            result.add(new PlanDto(/* 적절한 인자 넣기 */));
         }
         return result;
     }
 
-    // ✅ 일정(Plan) 등록
     @Transactional
     public void addMyPlan(String username, PlanRequestDto dto) {
         User user = userRepository.findByUserName(username);
         if (user == null) throw new IllegalArgumentException("사용자 없음");
 
-        // CountryRepository에 findByName 없음 → findAll로 필터링
         Optional<Country> countryOpt = countryRepository.findAll().stream()
             .filter(c -> c.getName().equals(dto.getCountryName()))
             .findFirst();
@@ -115,16 +106,19 @@ public class MypageService {
         if (countryOpt.isEmpty()) throw new IllegalArgumentException("해당 국가 정보가 없습니다.");
         Country country = countryOpt.get();
 
+        LocalDate travelDate = LocalDate.parse(dto.getTravelDate());
+        LocalDate endDate = LocalDate.parse(dto.getEndDate()); // 수정된 부분
+
         WishList plan = WishList.builder()
             .user(user)
             .country(country)
-            .travelDate(LocalDate.parse(dto.getTravelDate()))
-            .endDate(dto.getEndDate())
+            .travelDate(travelDate)
+            .endDate(endDate)
             .build();
+
         mypageRepository.save(plan);
     }
 
-    // ✅ 일정(Plan) 삭제 (본인 것만 삭제 가능)
     @Transactional
     public void deleteMyPlan(String username, Integer planId) {
         WishList plan = mypageRepository.findById(planId)
