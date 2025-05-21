@@ -27,12 +27,15 @@ public class SecurityConfig {
 	    				AuthenticationPoint authenticationPoint,
 	    				PrincipalDetailsService principalDetailsService) throws Exception {
 	        http
+					.csrf(csrf -> csrf.disable())
 	            .authorizeHttpRequests(authz -> authz
+
 	            		 .requestMatchers("/auth/**", "/search/**", "/countries/**", "/gallery/*" ).permitAll()   // 이 경로는 로그인 없이도 접근 가능
+
 	            		 .requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**").permitAll()  // 정적 리소스 허용
-	            		 .anyRequest().authenticated()  // 그 외 경로는 로그인 필요 
+	            		 .anyRequest().authenticated()  // 그 외 경로는 로그인 필요
 	            //		.anyRequest().permitAll() // 모든 요청 허용 (임시)
-	                
+
 	            )
 	            .formLogin((form) -> form
 	                .loginPage("/auth/login")
