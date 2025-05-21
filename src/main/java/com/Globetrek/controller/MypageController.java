@@ -124,5 +124,6 @@ public ResponseEntity<?> deleteMyPlan(@PathVariable Integer planId, HttpSession 
 	} catch (IllegalArgumentException e) {
 		return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
 	}
-}
+}}
+	
 
