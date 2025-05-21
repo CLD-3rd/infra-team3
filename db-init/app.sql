@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `globetrek`.`countries` (
   `description` TEXT NULL DEFAULT NULL,
   `lat` DECIMAL(9,6) NULL DEFAULT NULL,
   `lon` DECIMAL(9,6) NULL DEFAULT NULL,
-  `flag_url` TEXT NULL DEFAULT NULL,  -- 🔹 추가된 부분
+  -- `flag_url` TEXT NULL DEFAULT NULL,  -- 🔹 추가된 부분
   PRIMARY KEY (`country_id`),
   UNIQUE INDEX `country_name` (`country_name` ASC)
 )
@@ -40,7 +40,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `globetrek`.`travel_logs` (
   `log_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NOT NULL,
-  `pic_url` TEXT NOT NULL,
+  -- `pic_url` TEXT NOT NULL,
   `hit` INT NULL DEFAULT '0',
   `like_count` INT NULL DEFAULT '0',
   `comment_count` INT NULL DEFAULT '0',
