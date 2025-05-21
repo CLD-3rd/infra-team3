@@ -22,7 +22,7 @@ public class TravelLogController {
     private final CommentService commentService;
 
     @GetMapping("/{log_id}")
-    public String getSpecificTravelLog(@PathVariable Integer log_id, 
+    public String getSpecificTravelLog(@PathVariable("log_id") Integer log_id,
                                      Model model,
                                      @RequestHeader(value = "Authorization", required = false) String token) {
         try {

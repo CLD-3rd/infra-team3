@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class TravelLogService {
     private final TravelLogRepository travelLogRepository;
     private final LikesService likesService;
+    private final WishListService wishListService;
 
     public List<TravelLog> getTravelLogsByCountryId(Integer countryId) {
         return travelLogRepository.findByCountryId(countryId);
@@ -43,6 +44,7 @@ public class TravelLogService {
                 .createdAt(travelLog.getCreatedAt())
                 .updatedAt(travelLog.getUpdatedAt())
                 .liked(likesService.isLiked(userId, logId))
+                .isWished(wishListService.isWished(userId,travelLog.getCountry().getId()))
                 .build();
         return responseDto;
     }

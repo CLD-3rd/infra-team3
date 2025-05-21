@@ -103,8 +103,8 @@
 	text-decoration: none;
 }
 .camera_loader {
-    background: #fff url(../images/camera-loader.gif) no-repeat center;
-	background: rgba(255, 255, 255, 0.9) url(../images/camera-loader.gif) no-repeat center;
+    background: #fff url(../images/gallery/camera-loader.gif) no-repeat center;
+	background: rgba(255, 255, 255, 0.9) url(../images/gallery/camera-loader.gif) no-repeat center;
 	border: 1px solid #ffffff;
 	border-radius: 18px;
 	height: 36px;
@@ -139,7 +139,7 @@
 
 
 .slide_wrapper .camera_prev{
-	background: url(../images/prevnext_bg.png) 0 0 repeat;
+	background: url(../images/gallery/prevnext_bg.png) 0 0 repeat;
 	width: 70px;	
 	top: 0 !important;
 	height: auto !important;
@@ -154,7 +154,7 @@
 }
 
 .slide_wrapper .camera_prev>span {
-	background: url(../images/prev.png) center 0 no-repeat;
+	background: url(../images/gallery/prev.png) center 0 no-repeat;
 	top: 50%;
 		
 	margin-top: -10px;
@@ -166,7 +166,7 @@
 }
 
 .slide_wrapper .camera_next>span {
-	background: url(../images/next.png) center 0 no-repeat;
+	background: url(../images/gallery/next.png) center 0 no-repeat;
 	top: 50%;
 	margin-top: -10px;
 	position: absolute;
@@ -179,7 +179,7 @@
 
 
 .slide_wrapper .camera_next {
-	background: url(../images/prevnext_bg.png) 0 0 repeat;
+	background: url(../images/gallery/prevnext_bg.png) 0 0 repeat;
 	width: 70px;	
 	top: 0  !important;
 	bottom: 0;
@@ -209,7 +209,7 @@
 
 }
 .camera_thumbs_cont ul {
-	background: url(../images/thumb_bg.png) 0 0 repeat;
+	background: url(../images/gallery/thumb_bg.png) 0 0 repeat;
 	overflow: hidden;
 	position: relative;
 	width: 100% !important;
@@ -301,7 +301,7 @@
 
 	display: inline-block;
 	background-color: #7ecefd;
-	background: url(../images/capt_a.png) 0 0 repeat-x #c5302c;
+	background: url(../images/gallery/capt_a.png) 0 0 repeat-x #c5302c;
 
 }
 

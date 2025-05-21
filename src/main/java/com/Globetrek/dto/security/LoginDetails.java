@@ -30,5 +30,9 @@ public class LoginDetails implements UserDetails{
 	    public String getUsername() {
 	        return user.getUserName();  
 	    }
+	    
+	    public String getNickname() {
+	        return user.getNickname(); 
+	    }
 
 }
