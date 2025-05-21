@@ -100,14 +100,10 @@ function handleWishlistSubmit(e) {
         return;
     }
 
-    const currentUserId = 1;
-
-    fetch(`/users/${currentUserId}/wishlists`, {
+    fetch(`/users/current/wishlists`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-            // TODO: JWT 토큰 추가 필요
-            // 'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify({
             countryId: parseInt(countryId),
@@ -157,8 +153,6 @@ function initializeComments() {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
-                            // TODO: JWT token
-                            // 'Authorization': 'Bearer ' + localStorage.getItem('token')
                         },
                         body: JSON.stringify({
                             content: content
@@ -264,8 +258,6 @@ function handleCommentActions(e) {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
-                // TODO: JWT token
-                // 'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify({ content: newContent })
         })
@@ -289,12 +281,7 @@ function handleCommentActions(e) {
     } else if (target === deleteBtn) {
         if (confirm('댓글을 삭제하시겠습니까?')) {
             fetch(`/gallery/${logId}/comments/${commentId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                    // TODO: JWT token
-                    // 'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
+                method: 'DELETE'
             })
             .then(res => {
                 if (!res.ok) throw new Error('Delete failed');
@@ -308,7 +295,7 @@ function handleCommentActions(e) {
     }
 }
 
-// Like functionality initialization
+// Like function
 function initializeLikes() {
     const likeBtn = document.querySelector('.like-btn');
     if (likeBtn) {
@@ -318,11 +305,7 @@ function initializeLikes() {
             const likeCount = document.querySelector('.like-count');
 
             fetch(`/gallery/${logId}/likes`, {
-                method: 'POST',
-                headers: {
-                    // TODO: JWT token
-                    // 'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
+                method: 'POST'
             })
             .then(response => response.json())
             .then(data => {

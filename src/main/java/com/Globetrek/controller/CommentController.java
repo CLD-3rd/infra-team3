@@ -4,9 +4,11 @@ import com.Globetrek.dto.Request.CommentRequestDto;
 import com.Globetrek.dto.Response.CommentResponseDto;
 import com.Globetrek.dto.Response.ErrorResponse;
 import com.Globetrek.service.CommentService;
+import com.Globetrek.dto.security.LoginDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -36,25 +38,15 @@ public class CommentController {
 
     @PostMapping("/{logId}/comments")
     public ResponseEntity<?> createComment(@PathVariable Integer logId,
-                                           @RequestBody CommentRequestDto commentRequestDto,
-                                           @RequestHeader(value = "Authorization", required = false) String token) {
+                                         @RequestBody CommentRequestDto commentRequestDto,
+                                         @AuthenticationPrincipal LoginDetails loginDetails) {
         try {
-            // TODO : get JWT userId
-            Integer userId = 1;
-            
-            // JWT 토큰이 있는 경우 토큰에서 userId 추출
-            /*
-            if (token != null && token.startsWith("Bearer ")) {
-                String jwtToken = token.substring(7);
-                Claims claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(jwtToken)
-                    .getBody();
-                userId = Long.parseLong(claims.getSubject());
+            if (loginDetails == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ErrorResponse.unauthorized("로그인이 필요합니다."));
             }
-            */
 
-            CommentResponseDto created = commentService.createComment(logId, userId, commentRequestDto);
+            CommentResponseDto created = commentService.createComment(logId, loginDetails.getUser().getId(), commentRequestDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(created);
         } catch (Exception e) {
             if (e.getMessage().contains("TL NOT FOUND")) {
@@ -71,26 +63,16 @@ public class CommentController {
 
     @PutMapping("/{logId}/comments/{commentId}")
     public ResponseEntity<?> updateComment(@PathVariable Integer logId,
-                                           @PathVariable Integer commentId,
-                                           @RequestBody CommentRequestDto commentRequestDto,
-                                           @RequestHeader(value = "Authorization", required = false) String token) {
+                                         @PathVariable Integer commentId,
+                                         @RequestBody CommentRequestDto commentRequestDto,
+                                         @AuthenticationPrincipal LoginDetails loginDetails) {
         try {
-            // TODO : get JWT userId
-            Integer userId = 1;
-            
-            // JWT 토큰이 있는 경우 토큰에서 userId 추출
-            /*
-            if (token != null && token.startsWith("Bearer ")) {
-                String jwtToken = token.substring(7);
-                Claims claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(jwtToken)
-                    .getBody();
-                userId = Long.parseLong(claims.getSubject());
+            if (loginDetails == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ErrorResponse.unauthorized("로그인이 필요합니다."));
             }
-            */
 
-            CommentResponseDto updated = commentService.updateComment(logId, commentId, userId, commentRequestDto);
+            CommentResponseDto updated = commentService.updateComment(logId, commentId, loginDetails.getUser().getId(), commentRequestDto);
             return ResponseEntity.ok(updated);
         } catch (RuntimeException e) {
             if (e.getMessage().contains("NOT FOUND")) {
@@ -110,25 +92,15 @@ public class CommentController {
 
     @DeleteMapping("/{logId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment(@PathVariable Integer logId,
-                                           @PathVariable Integer commentId,
-                                           @RequestHeader(value = "Authorization", required = false) String token) {
+                                         @PathVariable Integer commentId,
+                                         @AuthenticationPrincipal LoginDetails loginDetails) {
         try {
-            // TODO : get JWT userId
-            Integer userId = 1;
-            
-            // JWT 토큰이 있는 경우 토큰에서 userId 추출
-            /*
-            if (token != null && token.startsWith("Bearer ")) {
-                String jwtToken = token.substring(7);
-                Claims claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(jwtToken)
-                    .getBody();
-                userId = Long.parseLong(claims.getSubject());
+            if (loginDetails == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(ErrorResponse.unauthorized("로그인이 필요합니다."));
             }
-            */
 
-            commentService.deleteComment(logId, commentId, userId);
+            commentService.deleteComment(logId, commentId, loginDetails.getUser().getId());
             return ResponseEntity.ok(Map.of("msg", "DELETED"));
         } catch (RuntimeException e) {
             if (e.getMessage().contains("NOT FOUND")) {
@@ -145,7 +117,6 @@ public class CommentController {
                     .body(ErrorResponse.internalServerError("내부 서버 오류"));
         }
     }
-
 }
 
 
