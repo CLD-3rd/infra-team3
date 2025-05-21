@@ -115,7 +115,7 @@ public class MypageService {
         WishList plan = WishList.builder()
             .user(user)
             .country(country)
-            .travelDate(dto.getTravelDate())
+            .travelDate(LocalDate.parse(dto.getTravelDate()))
             .endDate(dto.getEndDate())
             .build();
         mypageRepository.save(plan);
