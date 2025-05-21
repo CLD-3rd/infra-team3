@@ -4,6 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <title>Image Gallery</title>
+  <link rel="icon" type="image/png" th:href="@{/images/globetrek_logo.png}">
   <meta charset="utf-8">
   <meta name="format-detection" content="telephone=no" />
   <link rel="stylesheet" th:href="@{/css/camera.css}">
@@ -127,7 +128,6 @@
     </div>
   </div>
 
-
 <script>
   const sortItems = document.querySelectorAll('.sort-item');
   const blogContainer = document.querySelector('.grid_7');
@@ -175,19 +175,7 @@
 
 
 
-
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container_12">
-      <div class="grid_12">
-        
-        <div class="copy">
-          Your Trip (c) 2014 | <a href="#">Privacy Policy</a> | Website Template Designed by TemplateMonster.com
-        </div>
-      </div>
-    </div>
-  </footer>
+ 
 
 </body>
 </html>

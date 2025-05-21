@@ -12,6 +12,29 @@
 
 
 
+#toTop {
+    display: none;
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    left: 51%;
+    margin-left: 500px;
+    overflow: hidden;
+    width: 50px;
+    height: 49px;
+    border: none;
+    text-indent: -999px;
+    z-index: 20;
+    background: url(../images/gallery/totop.png) no-repeat left 0;
+    transition: 0s ease;
+    -o-transition: 0s ease;
+    -webkit-transition: 0s ease;
+}
+#toTop:hover {
+    outline: none;
+    background-position: right 0;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
 	color: #3e454c;
@@ -512,7 +535,7 @@ footer {
     border: none;
     text-indent: -999px;
     z-index: 20;
-    background: url(../images/totop.png) no-repeat left 0;
+    background: url(../images/gallery/totop.png) no-repeat left 0;
     transition: 0s ease;
     -o-transition: 0s ease;
     -webkit-transition: 0s ease;
