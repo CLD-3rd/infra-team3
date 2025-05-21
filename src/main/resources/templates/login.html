@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Login Page</title>
     <link rel="stylesheet" href="/css/loginStyle.css">
+    <link rel="icon" type="image/png" th:href="@{/images/globetrek_logo.png}"> 
 </head>
 <body> 
     <div class="login-box">
@@ -27,5 +28,24 @@
             
         </form>
     </div>
+    <!-- 로그인이 필요한 경우 뜨는 팝업 창-->
+    <div id="customAlert" style=
+    	"display:none; position:fixed; left:50%; transform:translateX(-50%);
+         width: 350px; height: 100px; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px gray;
+         display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+         ">
+  		<p style="margin-bottom: 30px;">로그인이 필요합니다. 로그인 후 이용해주세요.</p>
+  		<button onclick="document.getElementById('customAlert').style.display='none'">확인</button>
+	</div>
+    <script>
+  		window.onload = function () {
+    	const urlParams = new URLSearchParams(window.location.search);
+    	if (urlParams.has('unauthorized')) {
+      		document.getElementById("customAlert").style.display = "block";
+    		} else {
+    		document.getElementById("customAlert").style.display = "none";
+  			}
+  		}
+	</script>
 </body>
 </html>

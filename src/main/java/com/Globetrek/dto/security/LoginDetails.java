@@ -11,24 +11,30 @@ import com.Globetrek.entity.User;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class LoginDetails implements UserDetails{
+public class LoginDetails implements UserDetails {
 	
+	private final User user;
 	
-	    private final User user;
-	    
-	    @Override
-	    public Collection<? extends GrantedAuthority> getAuthorities() {
-	        return Collections.emptyList();
-	    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Collections.emptyList();
+	}
 
-	    @Override
-	    public String getPassword() {
-	        return user.getPassword();  
-	    }
+	@Override
+	public String getPassword() {
+		return user.getPassword();  
+	}
 
-	    @Override
-	    public String getUsername() {
-	        return user.getUserName();  
-	    }
+	@Override
+	public String getUsername() {
+		return user.getUserName();  
+	}
+	
+	public String getNickname() {
+		return user.getNickname(); 
+	}
 
+	public User getUser() {
+		return user;
+	}
 }

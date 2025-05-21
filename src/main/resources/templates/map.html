@@ -1,11 +1,16 @@
 
 <!DOCTYPE html>
 
-<html class="no-js"> 
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> 
 	<head>
+		
+		
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Listing &mdash; 100% Free Fully Responsive HTML5 Template by FREEHTML5.co</title>
+	<title>GlobeTrek</title>
+	<link rel="icon" type="image/png" th:href="@{/images/globetrek_logo.png}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
@@ -51,10 +56,17 @@
 						<!-- START #fh5co-menu-wrap -->
 						<nav id="fh5co-menu-wrap" role="navigation">
 							<ul class="sf-menu" id="fh5co-primary-menu">
-								<li><a th:href="@{/login}" style="font-size: 25px;">Login</a></li>
-								<li><a th:href="@{/mypage}" style="font-size: 25px;">MyPage</a></li>
-								<li><a th:href="@{/register}" style="font-size: 25px;">Register</a></li>
-							</ul>
+    <li sec:authorize="isAuthenticated()">
+        <a th:text="${#authentication.principal.nickname + '님'}" style="font-size: 25px;"></a>
+    </li>
+    <li sec:authorize="isAnonymous()">
+        <a th:href="@{/auth/login}" style="font-size: 25px;">Login</a>
+    </li>
+    <li sec:authorize="isAnonymous()">
+        <a th:href="@{/auth/signup}" style="font-size: 25px;">Register</a>
+    </li>
+    <li><a th:href="@{/mypage}" style="font-size: 25px;">MyPage</a></li>
+</ul>
 						</nav>
 					</div>
 				</div>

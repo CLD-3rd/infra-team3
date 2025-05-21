@@ -16,25 +16,23 @@ import java.util.stream.Collectors;
 public class TravelLogService {
     private final TravelLogRepository travelLogRepository;
     private final LikesService likesService;
+    private final WishListService wishListService;
 
     public List<TravelLog> getTravelLogsByCountryId(Integer countryId) {
         return travelLogRepository.findByCountryId(countryId);
     }
 
-    public TravelLogResponseDto getSpecificTL(Integer logId) throws Exception {
+    public TravelLogResponseDto getSpecificTL(Integer logId, Integer userId) throws Exception {
         TravelLog travelLog = travelLogRepository.findById(logId).orElseThrow(() -> new Exception("TL NOT FOUND"));
 
         // hit count + 1
         travelLog.setHit(travelLog.getHit() + 1);
         travelLogRepository.save(travelLog);
 
-        // TODO : get JWT userId
-        Integer userId = 1;
-
         TravelLogResponseDto responseDto = TravelLogResponseDto.builder()
                 .logId(travelLog.getId())
                 .title(travelLog.getTitle())
-                .picUrl(travelLog.getPicUrl())
+                .picUrl("/images/countries/" + travelLog.getCountry().getName() + "/" + travelLog.getTitle() + ".jpg")
                 .hit(travelLog.getHit())
                 .likeCount(travelLog.getLikeCount())
                 .commentCount(travelLog.getCommentCount())
@@ -42,7 +40,8 @@ public class TravelLogService {
                 .countryName(travelLog.getCountry().getName())
                 .createdAt(travelLog.getCreatedAt())
                 .updatedAt(travelLog.getUpdatedAt())
-                .liked(likesService.isLiked(userId, logId))
+                .liked(userId != null && likesService.isLiked(userId, logId))
+                .isWished(userId != null && wishListService.isWished(userId, travelLog.getCountry().getId()))
                 .build();
         return responseDto;
     }
@@ -55,15 +54,11 @@ public class TravelLogService {
         travelLogRepository.save(travelLog);
     }
 
-    public List<TravelLogResponseDto> getRelatedTL(Integer logId) throws Exception {
-
+    public List<TravelLogResponseDto> getRelatedTL(Integer logId, Integer userId) throws Exception {
         TravelLog currentTL = travelLogRepository.findById(logId).orElseThrow(() -> new Exception("TL NOT FOUND"));
 
         String countryName = currentTL.getCountry().getName();
         List<TravelLog> relatedTL = travelLogRepository.findAllByCountry_Name(countryName);
-
-        // TODO : get JWT userId
-        Integer userId = 1;
 
         return relatedTL.stream()
                 .filter(tl -> !tl.getId().equals(logId))
@@ -71,7 +66,7 @@ public class TravelLogService {
                 .map(tl -> TravelLogResponseDto.builder()
                         .logId(tl.getId())
                         .title(tl.getTitle())
-                        .picUrl(tl.getPicUrl())
+                        .picUrl("/images/countries/" + tl.getCountry().getName() + "/" + tl.getTitle() + ".jpg")
                         .hit(tl.getHit())
                         .likeCount(tl.getLikeCount())
                         .commentCount(tl.getCommentCount())
@@ -79,7 +74,7 @@ public class TravelLogService {
                         .countryName(tl.getCountry().getName())
                         .createdAt(tl.getCreatedAt())
                         .updatedAt(tl.getUpdatedAt())
-                        .liked(likesService.isLiked(userId, tl.getId()))
+                        .liked(userId != null && likesService.isLiked(userId, tl.getId()))
                         .build())
                 .collect(Collectors.toList());
     }

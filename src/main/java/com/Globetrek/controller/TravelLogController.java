@@ -2,9 +2,11 @@ package com.Globetrek.controller;
 
 import com.Globetrek.dto.Response.CommentResponseDto;
 import com.Globetrek.dto.Response.TravelLogResponseDto;
+import com.Globetrek.dto.security.LoginDetails;
 import com.Globetrek.service.CommentService;
 import com.Globetrek.service.TravelLogService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +23,14 @@ public class TravelLogController {
     private final CommentService commentService;
 
     @GetMapping("/{log_id}")
-    public String getSpecificTravelLog(@PathVariable Integer log_id, Model model) {
+    public String getSpecificTravelLog(@PathVariable("log_id") Integer log_id,
+                                     Model model,
+                                     @AuthenticationPrincipal LoginDetails loginDetails) {
         try {
-            // TODO : get JWT userId
-            Integer userId = 1;
+            Integer userId = loginDetails != null ? loginDetails.getUser().getId() : null;
 
-            TravelLogResponseDto travelLogResponseDTO = travelLogService.getSpecificTL(log_id);
-            List<TravelLogResponseDto> relatedTL = travelLogService.getRelatedTL(log_id);
+            TravelLogResponseDto travelLogResponseDTO = travelLogService.getSpecificTL(log_id, userId);
+            List<TravelLogResponseDto> relatedTL = travelLogService.getRelatedTL(log_id, userId);
             List<CommentResponseDto> comments = commentService.getAllComments(log_id);
 
             model.addAttribute("mainPhoto", travelLogResponseDTO);
