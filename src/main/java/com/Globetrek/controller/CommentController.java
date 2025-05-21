@@ -36,10 +36,23 @@ public class CommentController {
 
     @PostMapping("/{logId}/comments")
     public ResponseEntity<?> createComment(@PathVariable Integer logId,
-                                           @RequestBody CommentRequestDto commentRequestDto) {
+                                           @RequestBody CommentRequestDto commentRequestDto,
+                                           @RequestHeader(value = "Authorization", required = false) String token) {
         try {
             // TODO : get JWT userId
             Integer userId = 1;
+            
+            // JWT 토큰이 있는 경우 토큰에서 userId 추출
+            /*
+            if (token != null && token.startsWith("Bearer ")) {
+                String jwtToken = token.substring(7);
+                Claims claims = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+                userId = Long.parseLong(claims.getSubject());
+            }
+            */
 
             CommentResponseDto created = commentService.createComment(logId, userId, commentRequestDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(created);
@@ -59,11 +72,23 @@ public class CommentController {
     @PutMapping("/{logId}/comments/{commentId}")
     public ResponseEntity<?> updateComment(@PathVariable Integer logId,
                                            @PathVariable Integer commentId,
-                                           @RequestBody CommentRequestDto commentRequestDto) {
+                                           @RequestBody CommentRequestDto commentRequestDto,
+                                           @RequestHeader(value = "Authorization", required = false) String token) {
         try {
             // TODO : get JWT userId
             Integer userId = 1;
-
+            
+            // JWT 토큰이 있는 경우 토큰에서 userId 추출
+            /*
+            if (token != null && token.startsWith("Bearer ")) {
+                String jwtToken = token.substring(7);
+                Claims claims = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+                userId = Long.parseLong(claims.getSubject());
+            }
+            */
 
             CommentResponseDto updated = commentService.updateComment(logId, commentId, userId, commentRequestDto);
             return ResponseEntity.ok(updated);
@@ -85,11 +110,23 @@ public class CommentController {
 
     @DeleteMapping("/{logId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment(@PathVariable Integer logId,
-                                           @PathVariable Integer commentId) {
+                                           @PathVariable Integer commentId,
+                                           @RequestHeader(value = "Authorization", required = false) String token) {
         try {
             // TODO : get JWT userId
             Integer userId = 1;
-
+            
+            // JWT 토큰이 있는 경우 토큰에서 userId 추출
+            /*
+            if (token != null && token.startsWith("Bearer ")) {
+                String jwtToken = token.substring(7);
+                Claims claims = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+                userId = Long.parseLong(claims.getSubject());
+            }
+            */
 
             commentService.deleteComment(logId, commentId, userId);
             return ResponseEntity.ok(Map.of("msg", "DELETED"));

@@ -40,7 +40,7 @@ public class WishListService {  // 예: UserService
         Country country = countryRepository.findById(wishlist.getCountry().getId())
                 .orElseThrow(() -> new RuntimeException("COUNTRY NOT FOUND"));
         dto.setCountryName(country.getName());
-        dto.setFlagUrl(country.getFlagUrl());
+        dto.setFlagUrl("/images/countries/" + country.getName() + "/flag.png");
 
         return dto;
     }

@@ -31,6 +31,6 @@ public class Country {
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     private List<WishList> wishlists;
 
-    @Column(name = "flag_url")
-    private String flagUrl;
+//    @Column(name = "flag_url")
+//    private String flagUrl;
 }

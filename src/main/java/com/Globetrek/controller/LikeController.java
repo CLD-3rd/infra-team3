@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,10 +21,23 @@ public class LikeController {
     private final LikesService likesService;
 
     @PostMapping("/{log_id}/likes")
-    public ResponseEntity<?> toggleLike(@PathVariable("log_id") Integer logId) {
+    public ResponseEntity<?> toggleLike(@PathVariable("log_id") Integer logId,
+                                      @RequestHeader(value = "Authorization", required = false) String token) {
         try {
             // TODO : get JWT userId
             Integer userId = 1;
+            
+            // JWT 토큰이 있는 경우 토큰에서 userId 추출
+            /*
+            if (token != null && token.startsWith("Bearer ")) {
+                String jwtToken = token.substring(7);
+                Claims claims = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+                userId = Long.parseLong(claims.getSubject());
+            }
+            */
 
             // Get current like state
             boolean currentState = likesService.isLiked(userId, logId);
