@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.Globetrek.dto.security.AuthenticationPoint;
+import com.Globetrek.dto.security.handler.CustomLoginSuccessHandler;
 import com.Globetrek.service.PrincipalDetailsService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 	private final PrincipalDetailsService principalDetailsService;
+	private final AuthenticationPoint authenticationPoint;
+    private final CustomLoginSuccessHandler customLoginSuccessHandler;
 	 	@Bean
 	    public SecurityFilterChain filterChain(HttpSecurity http,
 	    				AuthenticationPoint authenticationPoint,
@@ -32,8 +35,9 @@ public class SecurityConfig {
 	                
 	            )
 	            .formLogin((form) -> form
-	                .loginPage("/auth/login") 
-	                .defaultSuccessUrl("/countries") // 로그인 성공 시 이동 경로
+	                .loginPage("/auth/login")
+	                .successHandler(new CustomLoginSuccessHandler())
+	                //.defaultSuccessUrl("/countries") // 로그인 성공 시 이동 경로
 	                .failureUrl("/auth/login?error")
 	                .permitAll()
 	            )
