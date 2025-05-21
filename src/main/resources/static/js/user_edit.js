@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       const response = await fetch("/api/mypage/edit", {
         method: "PATCH",
+		credentials: "same-origin",  // 
         headers: {
           "Content-Type": "application/json"
           // "Authorization": `Bearer ${localStorage.getItem("token")}` // 추후 JWT 인증 활성화

@@ -3,7 +3,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   const createdAtElement = document.getElementById("createdAt");
 
   try {
-    const response = await fetch("/api/mypage");
+    const response = await fetch("/api/mypage",{ 
+		credentials: "same-origin" // 테스트용
+	});
+	
     const data = await response.json();
 
     if (response.ok) {
