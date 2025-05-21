@@ -41,9 +41,6 @@ public class MypageService {
         List<PlanDto> plans = getMyPlans(username);
 
         return new MypageResponseDto(
-            user.getNickname(),
-            user.getCreatedAt(),
-            plans
         );
     }
 
@@ -96,11 +93,6 @@ public class MypageService {
         List<PlanDto> result = new ArrayList<>();
         for (WishList w : wishlists) {
             result.add(new PlanDto(
-                w.getId(),
-                w.getCountry().getName(),
-                null, // Country 엔티티에 emoji 필드가 없으면 주석
-                w.getTravelDate(),
-                w.getEndDate()
             ));
         }
         return result;

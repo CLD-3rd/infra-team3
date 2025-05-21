@@ -1,6 +1,7 @@
 package com.Globetrek.repository;
 
 import com.Globetrek.entity.Comment;
+import com.Globetrek.entity.Country;
 import com.Globetrek.entity.User;
 import com.Globetrek.entity.WishList;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +30,8 @@ public interface MypageRepository extends JpaRepository<WishList, Integer> {
     // ✅ WishList(Plan) 단건 조회 (본인 확인용)
     @Query("SELECT w FROM WishList w WHERE w.id = :planId")
     Optional<WishList> findById(@Param("planId") Integer planId);
+    
+    // Country 전체 리스트
+    @Query("SELECT c FROM Country c")
+    List<Country> findAllCountries();
 }
