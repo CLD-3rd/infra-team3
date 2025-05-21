@@ -57,6 +57,11 @@ public class MainPageController {
             .orElse("redirect:/countries?error=notfound");
     }  
     //여기까지
-    
+
+    @GetMapping("/mypage")
+    public String goMypage(){
+
+        return "mypage";
+    }
     
 }

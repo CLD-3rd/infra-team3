@@ -32,15 +32,15 @@
   <div class="d-flex flex-column gap-3">
     <div class="card h-100 shadow-sm">
       <div class="card-body">
-        <h5 class="card-title">📅 My Plan <span class="badge bg-secondary">2</span></h5>
-        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#planModal">일정 보기</button>
+        <h5 class="card-title">📅 My Plan <span class="badge bg-secondary" id="planCount">0</span></h5>
+        <button id="chkWL" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#planModal">일정 보기</button>
       </div>
     </div>
     
     
     <div class="card h-100 shadow-sm">
       <div class="card-body">
-        <h5 class="card-title">🗨️ My Comment <span class="badge bg-dark">5</span></h5>
+        <h5 class="card-title">🗨️ My Comment <span class="badge bg-dark" id="commentCount">0</span></h5>
         <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#commentModal">댓글 보기</button>
       </div>
     </div>
@@ -90,7 +90,7 @@
           <thead>
             <tr>
               <th>날짜</th>
-              <th>여행지</th>
+<!--              <th>여행지</th>-->
               <th>댓글 내용</th>
             </tr>
           </thead>
