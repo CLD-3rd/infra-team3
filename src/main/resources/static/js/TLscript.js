@@ -320,7 +320,6 @@ function initializeLikes() {
             fetch(`/gallery/${logId}/likes`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
                     // TODO: JWT token
                     // 'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
