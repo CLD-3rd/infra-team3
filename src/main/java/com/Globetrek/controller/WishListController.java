@@ -24,11 +24,23 @@ public class WishListController {
     public ResponseEntity<?> getAllWishlists(@PathVariable Integer userId,
                                              @RequestParam(defaultValue = "1") int page,
                                              @RequestParam(defaultValue = "10") int size,
-                                             @RequestParam(defaultValue = "createdAt") String sort) {
+                                             @RequestParam(defaultValue = "createdAt") String sort,
+                                             @RequestHeader(value = "Authorization", required = false) String token) {
         try {
             // TODO : get JWT userId
             Integer currentUserId = 1;
-
+            
+            // JWT 토큰이 있는 경우 토큰에서 userId 추출
+            /*
+            if (token != null && token.startsWith("Bearer ")) {
+                String jwtToken = token.substring(7);
+                Claims claims = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+                currentUserId = Long.parseLong(claims.getSubject());
+            }
+            */
 
             if (!currentUserId.equals(userId)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -47,11 +59,23 @@ public class WishListController {
 
     @GetMapping("/{userId}/wishlists/{wishlistId}")
     public ResponseEntity<?> getWishlist(@PathVariable Integer userId,
-                                         @PathVariable Integer wishlistId) {
+                                         @PathVariable Integer wishlistId,
+                                         @RequestHeader(value = "Authorization", required = false) String token) {
         try {
             // TODO : get JWT userId
             Integer currentUserId = 1;
-
+            
+            // JWT 토큰이 있는 경우 토큰에서 userId 추출
+            /*
+            if (token != null && token.startsWith("Bearer ")) {
+                String jwtToken = token.substring(7);
+                Claims claims = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+                currentUserId = Long.parseLong(claims.getSubject());
+            }
+            */
 
             if (!currentUserId.equals(userId)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -78,10 +102,23 @@ public class WishListController {
 
     @PostMapping("/{userId}/wishlists")
     public ResponseEntity<?> createWishlist(@PathVariable Integer userId,
-                                            @RequestBody WishListRequestDto wishListRequestDto) {
+                                            @RequestBody WishListRequestDto wishListRequestDto,
+                                            @RequestHeader(value = "Authorization", required = false) String token) {
         try {
             // TODO : get JWT userId
             Integer currentUserId = 1;
+            
+            // JWT 토큰이 있는 경우 토큰에서 userId 추출
+            /*
+            if (token != null && token.startsWith("Bearer ")) {
+                String jwtToken = token.substring(7);
+                Claims claims = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+                currentUserId = Long.parseLong(claims.getSubject());
+            }
+            */
 
             if (!currentUserId.equals(userId)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -113,11 +150,23 @@ public class WishListController {
     @PutMapping("/{userId}/wishlists/{wishlistId}")
     public ResponseEntity<?> updateWishlist(@PathVariable Integer userId,
                                             @PathVariable Integer wishlistId,
-                                            @RequestBody WishListRequestDto wishListRequestDto) {
+                                            @RequestBody WishListRequestDto wishListRequestDto,
+                                            @RequestHeader(value = "Authorization", required = false) String token) {
         try {
             // TODO : get JWT userId
             Integer currentUserId = 1;
-
+            
+            // JWT 토큰이 있는 경우 토큰에서 userId 추출
+            /*
+            if (token != null && token.startsWith("Bearer ")) {
+                String jwtToken = token.substring(7);
+                Claims claims = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+                currentUserId = Long.parseLong(claims.getSubject());
+            }
+            */
 
             if (!currentUserId.equals(userId)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -150,11 +199,23 @@ public class WishListController {
 
     @DeleteMapping("/{userId}/wishlists/{wishlistId}")
     public ResponseEntity<?> deleteWishlist(@PathVariable Integer userId,
-                                            @PathVariable Integer wishlistId) {
+                                            @PathVariable Integer wishlistId,
+                                            @RequestHeader(value = "Authorization", required = false) String token) {
         try {
             // TODO : get JWT userId
             Integer currentUserId = 1;
-
+            
+            // JWT 토큰이 있는 경우 토큰에서 userId 추출
+            /*
+            if (token != null && token.startsWith("Bearer ")) {
+                String jwtToken = token.substring(7);
+                Claims claims = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
+                currentUserId = Long.parseLong(claims.getSubject());
+            }
+            */
 
             if (!currentUserId.equals(userId)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
