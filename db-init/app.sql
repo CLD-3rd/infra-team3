@@ -14,19 +14,19 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema project
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `project` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
-USE `project` ;
+CREATE SCHEMA IF NOT EXISTS `globetrek` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `globetrek` ;
 
 -- -----------------------------------------------------
 -- Table `project`.`countries`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `project`.`countries` (
+CREATE TABLE IF NOT EXISTS `globetrek`.`countries` (
   `country_id` INT NOT NULL AUTO_INCREMENT,
   `country_name` VARCHAR(100) NOT NULL,
   `description` TEXT NULL DEFAULT NULL,
   `lat` DECIMAL(9,6) NULL DEFAULT NULL,
   `lon` DECIMAL(9,6) NULL DEFAULT NULL,
-  `flag_url` TEXT NULL DEFAULT NULL,  -- 🔹 추가된 부분
+  -- `flag_url` TEXT NULL DEFAULT NULL,  -- 🔹 추가된 부분
   PRIMARY KEY (`country_id`),
   UNIQUE INDEX `country_name` (`country_name` ASC)
 )
@@ -37,10 +37,10 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `project`.`travel_logs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `project`.`travel_logs` (
+CREATE TABLE IF NOT EXISTS `globetrek`.`travel_logs` (
   `log_id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NOT NULL,
-  `pic_url` TEXT NOT NULL,
+  -- `pic_url` TEXT NOT NULL,
   `hit` INT NULL DEFAULT '0',
   `like_count` INT NULL DEFAULT '0',
   `comment_count` INT NULL DEFAULT '0',
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `project`.`travel_logs` (
   INDEX `country_id` (`country_id` ASC),
   CONSTRAINT `travel_logs_ibfk_1`
     FOREIGN KEY (`country_id`)
-    REFERENCES `project`.`countries` (`country_id`)
+    REFERENCES `globetrek`.`countries` (`country_id`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -61,7 +61,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `project`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `project`.`users` (
+CREATE TABLE IF NOT EXISTS `globetrek`.`users` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(50) NOT NULL,
   `user_password` VARCHAR(100) NOT NULL,
@@ -77,7 +77,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `project`.`comments`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `project`.`comments` (
+CREATE TABLE IF NOT EXISTS `globetrek`.`comments` (
   `comment_id` INT NOT NULL AUTO_INCREMENT,
   `log_id` INT NOT NULL,
   `user_id` INT NOT NULL,
@@ -89,11 +89,11 @@ CREATE TABLE IF NOT EXISTS `project`.`comments` (
   INDEX `user_id` (`user_id` ASC),
   CONSTRAINT `comments_ibfk_1`
     FOREIGN KEY (`log_id`)
-    REFERENCES `project`.`travel_logs` (`log_id`)
+    REFERENCES `globetrek`.`travel_logs` (`log_id`)
     ON DELETE CASCADE,
   CONSTRAINT `comments_ibfk_2`
     FOREIGN KEY (`user_id`)
-    REFERENCES `project`.`users` (`user_id`)
+    REFERENCES `globetrek`.`users` (`user_id`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -103,18 +103,18 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `project`.`likes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `project`.`likes` (
+CREATE TABLE IF NOT EXISTS `globetrek`.`likes` (
   `user_id` INT NOT NULL,
   `log_id` INT NOT NULL,
   PRIMARY KEY (`user_id`, `log_id`),
   INDEX `log_id` (`log_id` ASC),
   CONSTRAINT `likes_ibfk_1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `project`.`users` (`user_id`)
+    REFERENCES `globetrek`.`users` (`user_id`)
     ON DELETE CASCADE,
   CONSTRAINT `likes_ibfk_2`
     FOREIGN KEY (`log_id`)
-    REFERENCES `project`.`travel_logs` (`log_id`)
+    REFERENCES `globetrek`.`travel_logs` (`log_id`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -124,7 +124,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `project`.`wishlists`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `project`.`wishlists` (
+CREATE TABLE IF NOT EXISTS `globetrek`.`wishlists` (
   `wishlist_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `country_id` INT NOT NULL,
@@ -137,11 +137,11 @@ CREATE TABLE IF NOT EXISTS `project`.`wishlists` (
   INDEX `country_id` (`country_id` ASC),
   CONSTRAINT `wishlists_ibfk_1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `project`.`users` (`user_id`)
+    REFERENCES `globetrek`.`users` (`user_id`)
     ON DELETE CASCADE,
   CONSTRAINT `wishlists_ibfk_2`
     FOREIGN KEY (`country_id`)
-    REFERENCES `project`.`countries` (`country_id`)
+    REFERENCES `globetrek`.`countries` (`country_id`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -196,7 +196,9 @@ INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('44', 'Colombia', 'Known for coffee, music, and vibrant culture.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('45', 'Comoros', 'Island group in the Indian Ocean with Arabic influence.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('46', 'Costa Rica', 'Eco-tourism haven with rainforests and beaches.');
-INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('47', 'Côte d\'Ivoire', 'West African country known for cocoa and cultural diversity.');
+
+INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('47', 'Côte d''Ivoire', 'West African country known for cocoa and cultural diversity.');
+
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('48', 'Croatia', 'Adriatic gem with medieval towns and clear seas.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('49', 'Cuba', 'Island nation famous for cigars, music, and vintage cars.');
 INSERT INTO `globetrek`.`countries` (`country_id`, `country_name`, `description`) VALUES ('50', 'Curaçao', 'Dutch Caribbean island with colorful architecture.');
@@ -405,3 +407,4 @@ UPDATE `globetrek`.`travel_logs` SET `comment_count` = '0', `hit` = '2', `like_c
 UPDATE `globetrek`.`travel_logs` SET `comment_count` = '0', `hit` = '3', `like_count` = '2', `created_at` = '2025-05-20 18:00', `updated_at` = '2025-05-20 18:00' WHERE (`log_id` = '15');
 UPDATE `globetrek`.`travel_logs` SET `comment_count` = '0', `hit` = '4', `like_count` = '1', `created_at` = '2025-05-20 18:00', `updated_at` = '2025-05-20 18:00' WHERE (`log_id` = '16');
 
+COMMIT;

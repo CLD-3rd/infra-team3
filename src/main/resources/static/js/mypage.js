@@ -3,15 +3,16 @@ document.addEventListener("DOMContentLoaded", async function () {
   const createdAtElement = document.getElementById("createdAt");
 
   try {
-    const response = await fetch("/api/mypage",{ 
-		credentials: "same-origin" // 테스트용
-	});
-	
+    const response = await fetch("/api/mypage");
     const data = await response.json();
 
     if (response.ok) {
       nicknameElements.forEach(el => el.textContent = data.nickname);
-      createdAtElement.textContent = new Date(data.createdAt).toLocaleString();
+      if (createdAtElement && data.createdAt) {
+        const date = new Date(data.createdAt);
+        const formattedDate = `${date.getFullYear()}년 ${String(date.getMonth() + 1).padStart(2, '0')}월 ${String(date.getDate()).padStart(2, '0')}일 ${String(date.getHours()).padStart(2, '0')}시 ${String(date.getMinutes()).padStart(2, '0')}분 ${String(date.getSeconds()).padStart(2, '0')}초`;
+        createdAtElement.textContent = formattedDate;
+      }
 
       // 모달 닉네임 입력란에도 기본값 세팅
       const nicknameInput = document.getElementById("nickname");

@@ -2,6 +2,7 @@ package com.Globetrek.service;
 
 import com.Globetrek.dto.Request.MypageRequestDto;
 import com.Globetrek.dto.Response.CommentResponseDto;
+import com.Globetrek.dto.Response.CountriesResponseDto;
 import com.Globetrek.dto.Response.MypageResponseDto;
 import com.Globetrek.dto.Response.MypageResponseDto.PlanDto;
 import com.Globetrek.dto.Response.MypageResponseDto.PlanRequestDto;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -33,22 +35,26 @@ public class MypageService {
     private final PasswordEncoder passwordEncoder;
 
     public MypageResponseDto getUserProfile(String username) {
-        /*
         User user = userRepository.findByUserName(username);
         if (user == null) {
             throw new IllegalArgumentException("사용자 정보를 찾을 수 없습니다.");
         }
 
-        List<PlanDto> plans = getMyPlans(username);
+//        List<PlanDto> plans = getMyPlans(username);
+        List<CommentResponseDto> comments = getMyComments(username);
 
-        return new MypageResponseDto(plans);
-        */
-        return null;
+        MypageResponseDto responseDto = new MypageResponseDto();
+        responseDto.setNickname(user.getNickname());
+        responseDto.setCreatedAt(user.getCreatedAt());
+//        responseDto.setPlans(plans);
+        responseDto.setComments(comments);
+
+        return responseDto;
     }
 
     @Transactional
     public void editUser(String username, MypageRequestDto dto) {
-        /*
+
         User user = userRepository.findByUserName(username);
         if (user == null) {
             throw new IllegalArgumentException("사용자 정보를 찾을 수 없습니다.");
@@ -70,11 +76,10 @@ public class MypageService {
         }
 
         user.setNickname(dto.getNickname());
-        */
+
     }
 
     public List<CommentResponseDto> getMyComments(String username) {
-        /*
         List<Comment> comments = mypageRepository.findAllCommentsByUsername(username);
         List<CommentResponseDto> dtos = new ArrayList<>();
         for (Comment c : comments) {
@@ -85,28 +90,29 @@ public class MypageService {
             dto.setContent(c.getContent());
             dto.setCreatedAt(c.getCreatedAt());
             dto.setUpdatedAt(c.getUpdatedAt());
+            dto.setLink("/gallery/" + c.getTravelLog().getId());
             dtos.add(dto);
         }
         return dtos;
-        */
-        return null;
     }
 
-    public List<PlanDto> getMyPlans(String username) {
-        /*
-        List<WishList> wishlists = mypageRepository.findAllWishlistsByUsername(username);
-        List<PlanDto> result = new ArrayList<>();
-        for (WishList w : wishlists) {
-            result.add(new PlanDto());
-        }
-        return result;
-        */
-        return null;
-    }
+//    public List<PlanDto> getMyPlans(String username) {
+//        List<WishList> wishlists = mypageRepository.findAllWishlistsByUsername(username);
+//        List<PlanDto> result = new ArrayList<>();
+//        for (WishList w : wishlists) {
+//            PlanDto dto = new PlanDto();
+//            dto.setId(w.getId());
+//            dto.setCountryName(w.getCountry().getName());
+//            dto.setCountryEmoji(w.getCountry().getEmoji());
+//            dto.setTravelDate(w.getTravelDate().toString());
+//            dto.setEndDate(w.getEndDate().toString());
+//            result.add(dto);
+//        }
+//        return result;
+//    }
 
     @Transactional
     public void addMyPlan(String username, PlanRequestDto dto) {
-        /*
         User user = userRepository.findByUserName(username);
         if (user == null) throw new IllegalArgumentException("사용자 없음");
 
@@ -128,17 +134,30 @@ public class MypageService {
             .build();
 
         mypageRepository.save(plan);
-        */
     }
 
     @Transactional
     public void deleteMyPlan(String username, Integer planId) {
-        /*
+        
         WishList plan = mypageRepository.findById(planId)
                 .orElseThrow(() -> new IllegalArgumentException("일정(Plan)이 존재하지 않습니다."));
         if (!plan.getUser().getUserName().equals(username))
             throw new IllegalArgumentException("본인의 일정만 삭제할 수 있습니다.");
         mypageRepository.delete(plan);
-        */
+        
+    }
+
+    @Transactional
+    public List<CountriesResponseDto> getCountries() {
+        return countryRepository.findAll().stream()
+                .map(this::converToDto)
+                .collect(Collectors.toList());
+    }
+
+    private CountriesResponseDto converToDto(Country country) {
+        CountriesResponseDto dto = new CountriesResponseDto();
+        dto.setCountryId(country.getId());
+        dto.setCountryName(country.getName());
+        return dto;
     }
 }
